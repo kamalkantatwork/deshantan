@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deshantan - Explore India</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🌏</span>
+                <span class="logo-text">Deshantan</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#destinations">Destinations</a></li>
+                <li><a href="#packages">Packages</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-actions" id="navActions">
+                <button class="btn-login" id="openLogin">Sign In</button>
+                <button class="btn-signup" id="openSignup">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h1><span class="gradient-text">Discover India</span><br />Like Never Before</h1>
+                <p>From the majestic Himalayas to the serene backwaters of Kerala, experience the magic of India with Deshantan.</p>
+                <div class="hero-stats">
+                    <div class="stat"><span class="stat-number">500+</span><span class="stat-label">Destinations</span></div>
+                    <div class="stat"><span class="stat-number">50K+</span><span class="stat-label">Happy Travelers</span></div>
+                    <div class="stat"><span class="stat-number">4.9★</span><span class="stat-label">Rating</span></div>
+                </div>
+                <button class="btn-hero" id="exploreBtn">Explore Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinations -->
+    <section id="destinations" class="destinations-section">
+        <div class="section-header">
+            <h2>Popular Destinations</h2>
+            <p>Explore India's most breathtaking destinations</p>
+        </div>
+        <div class="destination-grid" id="destinationGrid">
+            <!-- Dynamically loaded -->
+        </div>
+    </section>
+
+    <!-- Packages -->
+    <section id="packages" class="packages-section">
+        <div class="section-header">
+            <h2>Featured Tour Packages</h2>
+            <p>Curated experiences for every traveler</p>
+        </div>
+        <div class="packages-grid" id="packageGrid">
+            <!-- Dynamically loaded -->
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="section-header">
+            <h2>📞 Plan Your Trip</h2>
+            <p>Let us help you create the perfect itinerary</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p>📧 info@deshantan.com</p>
+                <p>📞 +91 98765 43210</p>
+                <p>🕐 Mon-Sat: 9AM - 8PM</p>
+                <div class="social-links">
+                    <a href="#">📸 Instagram</a>
+                    <a href="#">📘 Facebook</a>
+                    <a href="#">🐦 Twitter</a>
+                </div>
+            </div>
+            <form class="contact-form" id="bookingForm">
+                <h3>Send Inquiry</h3>
+                <input type="text" placeholder="Full Name" required />
+                <input type="email" placeholder="Email Address" required />
+                <input type="tel" placeholder="Phone Number" />
+                <select required>
+                    <option value="">Select Destination</option>
+                    <option>Taj Mahal</option>
+                    <option>Jaipur</option>
+                    <option>Kerala</option>
+                    <option>Varanasi</option>
+                    <option>Goa</option>
+                </select>
+                <input type="date" required />
+                <textarea placeholder="Special requests..." rows="4"></textarea>
+                <button type="submit" class="btn-submit">Send Inquiry</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>🌏 Deshantan</h3>
+                <p>Your trusted travel partner for exploring the incredible India.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="#destinations">Destinations</a>
+                <a href="#packages">Packages</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>📧 info@deshantan.com</p>
+                <p>📞 +91 98765 43210</p>
+                <p>🕐 Mon-Sat: 9AM - 8PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Deshantan Tourism. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Auth Modals -->
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-close" id="closeLogin">&times;</div>
+            <div class="auth-container">
+                <div class="auth-left">
+                    <h2>Welcome Back!</h2>
+                    <p>Sign in to continue your journey with Deshantan</p>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="loginEmail" placeholder="you@example.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="loginPassword" placeholder="••••••••" required />
+                        </div>
+                        <button type="submit" class="btn-auth">Sign In</button>
+                        <p class="auth-switch">Don't have an account? <span id="switchToSignup">Sign Up</span></p>
+                    </form>
+                </div>
+                <div class="auth-right">
+                    <img src="https://images.unsplash.com/photo-1532009324734-20f7f581ca4b?w=600" alt="Travel" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <div class="modal-close" id="closeSignup">&times;</div>
+            <div class="auth-container">
+                <div class="auth-left">
+                    <h2>Create Account</h2>
+                    <p>Start your adventure with Deshantan</p>
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="signupName" placeholder="John Doe" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="signupEmail" placeholder="you@example.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="signupPassword" placeholder="Min 6 characters" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" id="signupPhone" placeholder="+91 98765 43210" />
+                        </div>
+                        <button type="submit" class="btn-auth">Create Account</button>
+                        <p class="auth-switch">Already have an account? <span id="switchToLogin">Sign In</span></p>
+                    </form>
+                </div>
+                <div class="auth-right">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600" alt="Travel" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Dashboard - Deshantan</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🌏</span>
+                <span class="logo-text">Deshantan</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#destinations">Destinations</a></li>
+                <li><a href="index.html#packages">Packages</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-actions" id="navActions">
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=User&background=667eea&color=fff&size=40" alt="User" class="user-avatar" />
+                    <span class="user-name" id="userName">User</span>
+                    <button onclick="logout()" class="btn-logout">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard -->
+    <section class="dashboard-hero">
+        <div class="dashboard-hero-content">
+            <h1>👋 Welcome back, <span id="dashboardName">Traveler</span>!</h1>
+            <p>Manage your bookings, explore new destinations, and continue your journey with Deshantan.</p>
+        </div>
+    </section>
+
+    <!-- Dashboard Stats -->
+    <section class="dashboard-stats">
+        <div class="stats-grid">
+            <div class="stat-box">
+                <span class="stat-icon">✈️</span>
+                <div>
+                    <span class="stat-number" id="totalBookings">0</span>
+                    <span class="stat-label">Total Bookings</span>
+                </div>
+            </div>
+            <div class="stat-box">
+                <span class="stat-icon">⭐</span>
+                <div>
+                    <span class="stat-number">4.9</span>
+                    <span class="stat-label">Your Rating</span>
+                </div>
+            </div>
+            <div class="stat-box">
+                <span class="stat-icon">🏔️</span>
+                <div>
+                    <span class="stat-number" id="visitedPlaces">0</span>
+                    <span class="stat-label">Places Visited</span>
+                </div>
+            </div>
+            <div class="stat-box">
+                <span class="stat-icon">💳</span>
+                <div>
+                    <span class="stat-number" id="totalSpent">₹0</span>
+                    <span class="stat-label">Total Spent</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Bookings -->
+    <section class="bookings-section">
+        <h2>📋 My Bookings</h2>
+        <div id="bookingsList" class="bookings-list">
+            <!-- Dynamically loaded -->
+        </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="quick-actions">
+        <h2>🚀 Quick Actions</h2>
+        <div class="actions-grid">
+            <a href="index.html#packages" class="action-card">
+                <span class="action-icon">🎒</span>
+                <h3>Book a Package</h3>
+                <p>Explore our curated tour packages</p>
+            </a>
+            <a href="index.html#destinations" class="action-card">
+                <span class="action-icon">🏔️</span>
+                <h3>Find Destinations</h3>
+                <p>Discover amazing places to visit</p>
+            </a>
+            <a href="about.html" class="action-card">
+                <span class="action-icon">ℹ️</span>
+                <h3>Learn About Us</h3>
+                <p>Know more about Deshantan</p>
+            </a>
+            <a href="#" class="action-card" onclick="showNotification('📞 Contact us at +91 98765 43210', 'info')">
+                <span class="action-icon">📞</span>
+                <h3>Contact Support</h3>
+                <p>We're here to help you 24/7</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>🌏 Deshantan</h3>
+                <p>Your trusted travel partner for exploring the incredible India.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="index.html#destinations">Destinations</a>
+                <a href="index.html#packages">Packages</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>📧 info@deshantan.com</p>
+                <p>📞 +91 98765 43210</p>
+                <p>🕐 Mon-Sat: 9AM - 8PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Deshantan Tourism. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
