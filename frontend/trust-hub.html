@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trust & Safety Hub - Deshantan</title>
+    <meta name="description" content="Deshantan's Trust & Safety Hub — verified local guides, hygiene-rated eateries, crowdsourced scam alerts, commission-free stays, off-beat destinations, and solo/women traveler safety check-in." />
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🌏</span>
+                <span class="logo-text">Deshantan</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#destinations">Destinations</a></li>
+                <li><a href="index.html#packages">Packages</a></li>
+                <li><a href="trip-planner.html">Plan Trip</a></li>
+                <li><a href="trust-hub.html" class="active">🛡️ Trust Hub</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-actions" id="navActions">
+                <button class="btn-login" id="openLogin">Sign In</button>
+                <button class="btn-signup" id="openSignup">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="security-hero">
+            <div class="security-hero-content">
+                <h1>🛡️ Trust & Safety Hub</h1>
+                <p>Everything Deshantan does differently — built for real, safe, honestly-priced travel across India</p>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="section-header">
+                <h2>What makes Deshantan different</h2>
+                <p>Six things you won't find bundled together anywhere else</p>
+            </div>
+            <div class="trust-grid">
+                <a href="guides.html" class="trust-card">
+                    <div class="trust-icon">🧭</div>
+                    <h3>Verified Local Guides</h3>
+                    <p>Every guide is ID- and license-checked before they can accept a booking.</p>
+                    <span class="trust-link">Find a guide →</span>
+                </a>
+                <a href="alerts.html" class="trust-card">
+                    <div class="trust-icon">🚨</div>
+                    <h3>Scam & Price Alerts</h3>
+                    <p>Crowdsourced, real-time reports on touts, overcharging and unsafe spots.</p>
+                    <span class="trust-link">View alerts →</span>
+                </a>
+                <a href="eateries.html" class="trust-card">
+                    <div class="trust-icon">🍽️</div>
+                    <h3>Hygiene-Rated Eateries</h3>
+                    <p>Local food, rated on hygiene first — not just taste and reviews.</p>
+                    <span class="trust-link">Browse eateries →</span>
+                </a>
+                <a href="index.html#destinations" class="trust-card" id="offbeatCard">
+                    <div class="trust-icon">🗺️</div>
+                    <h3>Off-Beat Discovery</h3>
+                    <p>Hidden-gem destinations with low crowds — beyond the usual circuit.</p>
+                    <span class="trust-link">Explore off-beat →</span>
+                </a>
+                <a href="stays.html" class="trust-card">
+                    <div class="trust-icon">🏠</div>
+                    <h3>Direct Stay Listings</h3>
+                    <p>Book small hotels & homestays directly from the owner — zero commission.</p>
+                    <span class="trust-link">Find a stay →</span>
+                </a>
+                <a href="safety.html" class="trust-card">
+                    <div class="trust-icon">🆘</div>
+                    <h3>Solo & Women Safety Check-in</h3>
+                    <p>Scheduled check-ins and a one-tap SOS that alerts your emergency contact.</p>
+                    <span class="trust-link">Start check-in →</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="business-cta-section">
+            <div class="business-cta-content">
+                <div class="business-cta-text">
+                    <h2>📊 How we compare</h2>
+                    <p>Feature-for-feature, here's what's included with Deshantan that most travel apps skip.</p>
+                    <ul>
+                        <li>✅ Verified local guide booking</li>
+                        <li>✅ Crowdsourced scam/price alerts</li>
+                        <li>✅ Hygiene-rated local eateries</li>
+                        <li>✅ Off-beat destination discovery</li>
+                        <li>✅ Direct listings for small hotels/homestays (no big commission)</li>
+                        <li>✅ Solo/women traveler safety check-in</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>🌏 Deshantan</h3>
+                <p>Your trusted travel partner for exploring the incredible India.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Trust & Safety</h4>
+                <a href="guides.html">Verified Guides</a>
+                <a href="alerts.html">Scam & Price Alerts</a>
+                <a href="eateries.html">Hygiene-Rated Eateries</a>
+                <a href="stays.html">Direct Stay Listings</a>
+                <a href="safety.html">Safety Check-in</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>📧 info@deshantan.com</p>
+                <p>📞 +91 98765 43210</p>
+                <p>🕐 Mon-Sat: 9AM - 8PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Deshantan Tourism. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-close" id="closeLogin" role="button" aria-label="Close login modal" tabindex="0">&times;</div>
+            <div class="auth-container">
+                <div class="auth-left">
+                    <h2>Welcome Back!</h2>
+                    <p>Sign in to continue your journey with Deshantan</p>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Email Address</label>
+                            <input type="email" id="loginEmail" name="email" placeholder="you@example.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" name="password" placeholder="••••••••" required />
+                        </div>
+                        <button type="submit" class="btn-auth">Sign In</button>
+                        <p class="auth-switch">Don't have an account? <span id="switchToSignup">Sign Up</span></p>
+                    </form>
+                </div>
+                <div class="auth-right">
+                    <img src="https://images.unsplash.com/photo-1532009324734-20f7f581ca4b?w=600" alt="Taj Mahal at sunset" loading="lazy" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <div class="modal-close" id="closeSignup" role="button" aria-label="Close signup modal" tabindex="0">&times;</div>
+            <div class="auth-container">
+                <div class="auth-left">
+                    <h2>Create Account</h2>
+                    <p>Start your adventure with Deshantan</p>
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label for="signupName">Full Name</label>
+                            <input type="text" id="signupName" name="fullName" placeholder="John Doe" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="signupEmail">Email Address</label>
+                            <input type="email" id="signupEmail" name="email" placeholder="you@example.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" name="password" placeholder="Min 6 characters" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="signupPhone">Phone Number</label>
+                            <input type="tel" id="signupPhone" name="phone" placeholder="+91 98765 43210" />
+                        </div>
+                        <button type="submit" class="btn-auth">Create Account</button>
+                        <p class="auth-switch">Already have an account? <span id="switchToLogin">Sign In</span></p>
+                    </form>
+                </div>
+                <div class="auth-right">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600" alt="Beautiful beach in India" loading="lazy" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
