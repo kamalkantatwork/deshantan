@@ -66,6 +66,20 @@ const destinationSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    // Off-beat destination discovery: hidden gems that are NOT on the mainstream circuit
+    isOffbeat: {
+        type: Boolean,
+        default: false
+    },
+    crowdLevel: {
+        type: String,
+        enum: ['very_low', 'low', 'moderate', 'high', 'very_high'],
+        default: 'moderate'
+    },
+    offbeatTag: {
+        type: String,
+        default: ''
+    },
     coordinates: {
         lat: Number,
         lng: Number
