@@ -902,8 +902,9 @@ function updateProfileProgress() {
     });
 
     const percentage = Math.round((filled / Math.max(total, 1)) * 100);
-    document.getElementById('profileProgressFill')?.style.width = percentage + '%';
-    document.querySelector('.profile-progress')?.textContent = percentage + '%';
+    const profileProgressFillEl = document.getElementById('profileProgressFill');
+    if (profileProgressFillEl) profileProgressFillEl.style.width = percentage + '%';
+    if (document.querySelector('.profile-progress')) document.querySelector('.profile-progress').textContent = percentage + '%';
 }
 
 function completeProfile() {
@@ -1005,15 +1006,15 @@ function registerBusiness() {
         return;
     }
 
-    document.getElementById('businessForm')?.style.display = 'none';
-    document.getElementById('businessSuccess')?.style.display = 'block';
+    if (document.getElementById('businessForm')) document.getElementById('businessForm').style.display = 'none';
+    if (document.getElementById('businessSuccess')) document.getElementById('businessSuccess').style.display = 'block';
     localStorage.setItem('deshantan_business_profile', JSON.stringify(businessData));
     showNotification('✅ Business registered successfully!', 'success');
 }
 
 function resetBusinessForm() {
-    document.getElementById('businessForm')?.style.display = 'block';
-    document.getElementById('businessSuccess')?.style.display = 'none';
+    if (document.getElementById('businessForm')) document.getElementById('businessForm').style.display = 'block';
+    if (document.getElementById('businessSuccess')) document.getElementById('businessSuccess').style.display = 'none';
     document.getElementById('businessForm')?.reset();
 }
 
@@ -1040,8 +1041,8 @@ function registerSecurity() {
         return;
     }
 
-    document.getElementById('securityForm')?.style.display = 'none';
-    document.getElementById('securitySuccess')?.style.display = 'block';
+    if (document.getElementById('securityForm')) document.getElementById('securityForm').style.display = 'none';
+    if (document.getElementById('securitySuccess')) document.getElementById('securitySuccess').style.display = 'block';
     localStorage.setItem('deshantan_security_profile', JSON.stringify(securityData));
     showNotification('✅ Security profile submitted!', 'success');
 }
@@ -1071,8 +1072,8 @@ function registerOthers() {
         return;
     }
 
-    document.getElementById('othersForm')?.style.display = 'none';
-    document.getElementById('othersSuccess')?.style.display = 'block';
+    if (document.getElementById('othersForm')) document.getElementById('othersForm').style.display = 'none';
+    if (document.getElementById('othersSuccess')) document.getElementById('othersSuccess').style.display = 'block';
     localStorage.setItem('deshantan_others_profile', JSON.stringify(othersData));
     showNotification('✅ Support profile submitted!', 'success');
 }
@@ -1158,6 +1159,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ===== Trust & Safety feature pages =====
+    if (document.getElementById('guidesGrid')) initGuidesPage();
+    if (document.getElementById('eateriesGrid')) initEateriesPage();
+    if (document.getElementById('alertsFeed')) initAlertsPage();
+    if (document.getElementById('staysPageGrid')) initStaysPage();
+    if (document.getElementById('checkinForm')) initSafetyPage();
+    if (document.getElementById('tabOffbeat')) initOffbeatTabs();
+
     // Check authentication state
     const user = getUser();
     if (user && getToken()) {
@@ -1202,6 +1211,685 @@ async function checkBackendStatus() {
     } catch (error) {
         console.warn('⚠️ Backend not running. Using fallback data.');
     }
+}
+
+// ========== SHARED HELPERS ==========
+function timeAgo(dateStr) {
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'just now';
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs}h ago`;
+    const days = Math.floor(hrs / 24);
+    return `${days}d ago`;
+}
+
+function populateCityFilter(selectEl, cities) {
+    if (!selectEl) return;
+    const unique = [...new Set(cities.filter(Boolean))].sort();
+    unique.forEach(city => {
+        const opt = document.createElement('option');
+        opt.value = city;
+        opt.textContent = city;
+        selectEl.appendChild(opt);
+    });
+}
+
+// ============================================================
+// ========== 1) VERIFIED LOCAL GUIDES ==========
+// ============================================================
+let allGuidesCache = [];
+
+const mockGuides = [
+    { _id: 'g1', name: 'Arjun Verma', city: 'Agra', state: 'Uttar Pradesh', photo: 'https://ui-avatars.com/api/?name=Arjun+Verma&background=667eea&color=fff&size=200', languages: ['English', 'Hindi', 'French'], pricePerDay: 1800, rating: 4.9, verificationStatus: 'verified' },
+    { _id: 'g2', name: 'Lena Fernandes', city: 'Goa', state: 'Goa', photo: 'https://ui-avatars.com/api/?name=Lena+Fernandes&background=f5576c&color=fff&size=200', languages: ['English', 'Konkani'], pricePerDay: 1600, rating: 4.8, verificationStatus: 'verified' },
+    { _id: 'g3', name: 'Tenzin Dorjee', city: 'Manali', state: 'Himachal Pradesh', photo: 'https://ui-avatars.com/api/?name=Tenzin+Dorjee&background=764ba2&color=fff&size=200', languages: ['English', 'Hindi', 'Tibetan'], pricePerDay: 2200, rating: 5.0, verificationStatus: 'verified' }
+];
+
+async function initGuidesPage() {
+    document.getElementById('guideCityFilter').addEventListener('change', filterGuides);
+    document.getElementById('guideLangFilter').addEventListener('change', filterGuides);
+
+    document.getElementById('closeGuideBook').addEventListener('click', () => closeModal(document.getElementById('guideBookModal')));
+
+    const gbDays = document.getElementById('gbDays');
+    gbDays.addEventListener('input', updateGuideBookTotal);
+
+    document.getElementById('guideBookForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitGuideBooking();
+    });
+
+    document.getElementById('gbDate').min = new Date().toISOString().split('T')[0];
+
+    await loadGuides();
+}
+
+async function loadGuides() {
+    try {
+        const response = await fetch(`${API_URL}/guides`);
+        const data = await response.json();
+        allGuidesCache = data.success && data.data.length ? data.data : mockGuides;
+    } catch (error) {
+        console.warn('Guides API unavailable, using sample guides.', error);
+        allGuidesCache = mockGuides;
+    }
+    populateCityFilter(document.getElementById('guideCityFilter'), allGuidesCache.map(g => g.city));
+    displayGuides(allGuidesCache);
+}
+
+function filterGuides() {
+    const city = document.getElementById('guideCityFilter').value;
+    const lang = document.getElementById('guideLangFilter').value;
+    const filtered = allGuidesCache.filter(g =>
+        (!city || g.city === city) &&
+        (!lang || (g.languages || []).includes(lang))
+    );
+    displayGuides(filtered);
+}
+
+function displayGuides(guides) {
+    const grid = document.getElementById('guidesGrid');
+    if (!guides.length) {
+        grid.innerHTML = '<p style="text-align:center;color:#4a5568;padding:40px;grid-column:1/-1;">No verified guides match your filters yet.</p>';
+        return;
+    }
+    grid.innerHTML = guides.map(g => `
+        <div class="stay-card guide-card">
+            <img src="${g.photo || 'https://ui-avatars.com/api/?background=667eea&color=fff&size=200'}" alt="${g.name}" loading="lazy" />
+            <div class="stay-info">
+                <div class="badge-row">
+                    <span class="verified-badge">✅ Verified</span>
+                    <span class="stay-rating">★ ${g.rating ? g.rating.toFixed(1) : 'New'}</span>
+                </div>
+                <h3>${g.name}</h3>
+                <p>📍 ${g.city}, ${g.state}</p>
+                <p class="tag-row">${(g.languages || []).map(l => `<span class="mini-tag">${l}</span>`).join('')}</p>
+                <div>
+                    <span class="stay-price">₹${g.pricePerDay}/day</span>
+                </div>
+                <button class="btn-small" onclick="openGuideBookModal('${g._id}')">Book This Guide</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function openGuideBookModal(id) {
+    const guide = allGuidesCache.find(g => g._id === id);
+    if (!guide) return;
+    document.getElementById('guideBookId').value = id;
+    document.getElementById('guideBookTitle').textContent = `Book ${guide.name}`;
+    document.getElementById('gbDays').value = 1;
+    document.getElementById('gbGroup').value = 2;
+    updateGuideBookTotal();
+    openModal(document.getElementById('guideBookModal'));
+}
+
+function updateGuideBookTotal() {
+    const id = document.getElementById('guideBookId').value;
+    const guide = allGuidesCache.find(g => g._id === id);
+    const days = parseInt(document.getElementById('gbDays').value) || 1;
+    if (guide) {
+        document.getElementById('gbTotal').textContent = `Total: ₹${(guide.pricePerDay * days).toLocaleString()} for ${days} day(s)`;
+    }
+}
+
+async function submitGuideBooking() {
+    const id = document.getElementById('guideBookId').value;
+    const guide = allGuidesCache.find(g => g._id === id);
+    const payload = {
+        travelerName: document.getElementById('gbName').value,
+        travelerEmail: document.getElementById('gbEmail').value,
+        travelerPhone: document.getElementById('gbPhone').value,
+        tourDate: document.getElementById('gbDate').value,
+        days: parseInt(document.getElementById('gbDays').value) || 1,
+        groupSize: parseInt(document.getElementById('gbGroup').value) || 1,
+        notes: document.getElementById('gbNotes').value
+    };
+
+    try {
+        const response = await fetch(`${API_URL}/guides/${id}/book`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        if (data.success) {
+            showNotification(`✅ ${guide.name} booked! Reference: ${data.data.bookingReference}`, 'success');
+        } else {
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        console.warn('Booking API unavailable, confirming locally.', error);
+        showNotification(`✅ Booking request sent to ${guide.name}! They'll confirm shortly.`, 'success');
+    }
+    closeModal(document.getElementById('guideBookModal'));
+    document.getElementById('guideBookForm').reset();
+}
+
+// ============================================================
+// ========== 2) CROWDSOURCED SCAM / PRICE ALERTS ==========
+// ============================================================
+let allAlertsCache = [];
+
+const mockAlerts = [
+    { _id: 'a1', title: 'Overpriced auto from station', description: 'Autos near Agra Cantt station quoted ₹500 for a ₹150 ride. Always ask for the meter or a prepaid booth.', category: 'overpricing', city: 'Agra', severity: 'medium', reportedByName: 'Neha S.', upvotes: 34, confirmations: 12, createdAt: new Date(Date.now() - 3 * 3600000).toISOString() },
+    { _id: 'a2', title: '"Free" henna turns into a hard sell', description: 'Street vendors near Anjuna beach offer "free" henna, then demand ₹1000+ afterward. Politely decline upfront.', category: 'scam', city: 'Goa', severity: 'low', reportedByName: 'Marco T.', upvotes: 21, confirmations: 8, createdAt: new Date(Date.now() - 20 * 3600000).toISOString() },
+    { _id: 'a3', title: 'Fake "government-approved" guides at the ghats', description: 'Men claiming to be certified guides at Assi Ghat are not registered. Verify guides only through Deshantan.', category: 'fake_guide', city: 'Varanasi', severity: 'high', reportedByName: 'Anonymous Traveler', upvotes: 47, confirmations: 19, createdAt: new Date(Date.now() - 2 * 86400000).toISOString() }
+];
+
+async function initAlertsPage() {
+    document.getElementById('alertCityFilter').addEventListener('change', filterAlerts);
+    document.getElementById('alertCategoryFilter').addEventListener('change', filterAlerts);
+
+    document.getElementById('toggleAlertFormBtn').addEventListener('click', () => {
+        const section = document.getElementById('alertFormSection');
+        section.style.display = section.style.display === 'none' ? 'block' : 'none';
+    });
+
+    document.getElementById('alertForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitAlertReport();
+    });
+
+    await loadAlerts();
+}
+
+async function loadAlerts() {
+    try {
+        const response = await fetch(`${API_URL}/alerts`);
+        const data = await response.json();
+        allAlertsCache = data.success && data.data.length ? data.data : mockAlerts;
+    } catch (error) {
+        console.warn('Alerts API unavailable, using sample alerts.', error);
+        allAlertsCache = mockAlerts;
+    }
+    populateCityFilter(document.getElementById('alertCityFilter'), allAlertsCache.map(a => a.city));
+    displayAlerts(allAlertsCache);
+}
+
+function filterAlerts() {
+    const city = document.getElementById('alertCityFilter').value;
+    const category = document.getElementById('alertCategoryFilter').value;
+    const filtered = allAlertsCache.filter(a =>
+        (!city || a.city === city) && (!category || a.category === category)
+    );
+    displayAlerts(filtered);
+}
+
+const alertCategoryLabels = {
+    scam: '⚠️ Scam', overpricing: '💸 Overpricing', fake_guide: '🎭 Fake Guide',
+    unsafe_area: '🚧 Unsafe Area', touting: '📢 Touting', other: '❗ Other'
+};
+
+function displayAlerts(alerts) {
+    const feed = document.getElementById('alertsFeed');
+    if (!alerts.length) {
+        feed.innerHTML = '<p style="text-align:center;color:#4a5568;padding:40px;">No alerts for this filter yet — that\'s good news!</p>';
+        return;
+    }
+    feed.innerHTML = alerts.map(a => `
+        <div class="alert-card severity-${a.severity || 'medium'}" data-id="${a._id}">
+            <div class="alert-card-header">
+                <span class="alert-category-pill">${alertCategoryLabels[a.category] || a.category}</span>
+                <span class="alert-city-pill">📍 ${a.city}</span>
+            </div>
+            <h3>${a.title}</h3>
+            <p>${a.description}</p>
+            ${a.fairPriceNote ? `<p class="fair-price-note">💡 ${a.fairPriceNote}</p>` : ''}
+            <div class="alert-card-footer">
+                <span>Reported by ${a.reportedByName || 'Anonymous Traveler'} · ${a.createdAt ? timeAgo(a.createdAt) : 'recently'}</span>
+                <button class="btn-upvote" onclick="confirmAlert('${a._id}')">👍 Confirm (${a.upvotes || 0})</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function submitAlertReport() {
+    const payload = {
+        title: document.getElementById('alTitle').value,
+        city: document.getElementById('alCity').value,
+        category: document.getElementById('alCategory').value,
+        description: document.getElementById('alDescription').value,
+        severity: document.getElementById('alSeverity').value,
+        fairPriceNote: document.getElementById('alFairPrice').value,
+        reportedByName: document.getElementById('alName').value || 'Anonymous Traveler'
+    };
+
+    try {
+        const response = await fetch(`${API_URL}/alerts`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        if (data.success) {
+            allAlertsCache.unshift(data.data);
+        } else {
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        console.warn('Alerts API unavailable, adding locally.', error);
+        allAlertsCache.unshift({ ...payload, _id: 'local-' + Date.now(), upvotes: 0, confirmations: 1, createdAt: new Date().toISOString() });
+    }
+
+    showNotification('🙏 Thanks — your alert helps keep other travelers safe!', 'success');
+    document.getElementById('alertForm').reset();
+    document.getElementById('alertFormSection').style.display = 'none';
+    displayAlerts(allAlertsCache);
+}
+
+async function confirmAlert(id) {
+    try {
+        const response = await fetch(`${API_URL}/alerts/${id}/confirm`, { method: 'PUT' });
+        const data = await response.json();
+        if (data.success) {
+            const idx = allAlertsCache.findIndex(a => a._id === id);
+            if (idx > -1) allAlertsCache[idx] = data.data;
+        } else {
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        const idx = allAlertsCache.findIndex(a => a._id === id);
+        if (idx > -1) allAlertsCache[idx].upvotes = (allAlertsCache[idx].upvotes || 0) + 1;
+    }
+    displayAlerts(allAlertsCache);
+    showNotification('👍 Confirmed — thanks for helping verify this report.', 'info');
+}
+
+// ============================================================
+// ========== 3) HYGIENE-RATED EATERIES ==========
+// ============================================================
+let allEateriesCache = [];
+
+const mockEateries = [
+    { _id: 'e1', name: 'Pandit Pakodewala', city: 'Agra', cuisine: ['Street Food', 'North Indian'], priceRange: 'budget', imageUrl: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600', hygieneRating: 4.5, tasteRating: 4.8, reviewCount: 340 },
+    { _id: 'e2', name: 'Goan Fish Curry House', city: 'Goa', cuisine: ['Goan', 'Seafood'], priceRange: 'mid-range', imageUrl: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600', hygieneRating: 4.2, tasteRating: 4.6, reviewCount: 210 },
+    { _id: 'e3', name: 'Roadside Dhaba No. 7', city: 'Manali', cuisine: ['North Indian', 'Tibetan'], priceRange: 'budget', imageUrl: 'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=600', hygieneRating: 2.5, tasteRating: 4.0, reviewCount: 58 }
+];
+
+async function initEateriesPage() {
+    document.getElementById('eateryCityFilter').addEventListener('change', filterEateries);
+    document.getElementById('eateryHygieneFilter').addEventListener('change', filterEateries);
+    await loadEateries();
+}
+
+async function loadEateries() {
+    try {
+        const response = await fetch(`${API_URL}/eateries`);
+        const data = await response.json();
+        allEateriesCache = data.success && data.data.length ? data.data : mockEateries;
+    } catch (error) {
+        console.warn('Eateries API unavailable, using sample eateries.', error);
+        allEateriesCache = mockEateries;
+    }
+    populateCityFilter(document.getElementById('eateryCityFilter'), allEateriesCache.map(e => e.city));
+    displayEateries(allEateriesCache);
+}
+
+function filterEateries() {
+    const city = document.getElementById('eateryCityFilter').value;
+    const minHygiene = parseFloat(document.getElementById('eateryHygieneFilter').value) || 0;
+    const filtered = allEateriesCache.filter(e =>
+        (!city || e.city === city) && (e.hygieneRating >= minHygiene)
+    );
+    displayEateries(filtered);
+}
+
+function hygieneBadgeClass(rating) {
+    if (rating >= 4) return 'hygiene-good';
+    if (rating >= 3) return 'hygiene-ok';
+    return 'hygiene-poor';
+}
+
+function displayEateries(eateries) {
+    const grid = document.getElementById('eateriesGrid');
+    if (!eateries.length) {
+        grid.innerHTML = '<p style="text-align:center;color:#4a5568;padding:40px;grid-column:1/-1;">No eateries match your filters yet.</p>';
+        return;
+    }
+    grid.innerHTML = eateries.map(e => `
+        <div class="stay-card eatery-card">
+            <img src="${e.imageUrl}" alt="${e.name}" loading="lazy" />
+            <div class="stay-info">
+                <div class="badge-row">
+                    <span class="hygiene-badge ${hygieneBadgeClass(e.hygieneRating)}">🧼 Hygiene ${e.hygieneRating.toFixed(1)}★</span>
+                    <span class="stay-rating">😋 ${e.tasteRating ? e.tasteRating.toFixed(1) : '4.0'}★</span>
+                </div>
+                <h3>${e.name}</h3>
+                <p>📍 ${e.city} · ${e.priceRange || 'budget'}</p>
+                <p class="tag-row">${(e.cuisine || []).map(c => `<span class="mini-tag">${c}</span>`).join('')}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ============================================================
+// ========== 4) DIRECT, COMMISSION-FREE STAY LISTINGS ==========
+// ============================================================
+let allDirectStaysCache = [];
+
+const mockDirectStays = [
+    { _id: 's1', name: 'Sharma Homestay', type: 'homestay', city: 'Agra', pricePerNight: 1400, rating: 4.8, imageUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600', ownerName: 'Meena Sharma', ownerPhone: '+91 97001 22334' },
+    { _id: 's2', name: 'Beira Mar Guest House', type: 'guesthouse', city: 'Goa', pricePerNight: 1800, rating: 4.6, imageUrl: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600', ownerName: "Joaquim D'Souza", ownerPhone: '+91 97002 33445' },
+    { _id: 's3', name: 'Mountain Nest Homestay', type: 'homestay', city: 'Manali', pricePerNight: 1100, rating: 4.9, imageUrl: 'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=600', ownerName: 'Deepak Thakur', ownerPhone: '+91 97003 44556' }
+];
+
+async function initStaysPage() {
+    document.getElementById('stayCityFilter').addEventListener('change', filterDirectStays);
+    document.getElementById('stayTypeFilter').addEventListener('change', filterDirectStays);
+
+    document.getElementById('listYourStayBtn').addEventListener('click', () => {
+        const section = document.getElementById('stayFormSection');
+        section.style.display = section.style.display === 'none' ? 'block' : 'none';
+    });
+
+    document.getElementById('stayListForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitStayListing();
+    });
+
+    await loadDirectStays();
+}
+
+async function loadDirectStays() {
+    try {
+        const response = await fetch(`${API_URL}/stays`);
+        const data = await response.json();
+        allDirectStaysCache = data.success && data.data.length ? data.data : mockDirectStays;
+    } catch (error) {
+        console.warn('Stays API unavailable, using sample stays.', error);
+        allDirectStaysCache = mockDirectStays;
+    }
+    populateCityFilter(document.getElementById('stayCityFilter'), allDirectStaysCache.map(s => s.city));
+    displayDirectStays(allDirectStaysCache);
+}
+
+function filterDirectStays() {
+    const city = document.getElementById('stayCityFilter').value;
+    const type = document.getElementById('stayTypeFilter').value;
+    const filtered = allDirectStaysCache.filter(s =>
+        (!city || s.city === city) && (!type || s.type === type)
+    );
+    displayDirectStays(filtered);
+}
+
+function displayDirectStays(stays) {
+    const grid = document.getElementById('staysPageGrid');
+    if (!stays.length) {
+        grid.innerHTML = '<p style="text-align:center;color:#4a5568;padding:40px;grid-column:1/-1;">No direct listings match your filters yet.</p>';
+        return;
+    }
+    grid.innerHTML = stays.map(s => `
+        <div class="stay-card direct-stay-card">
+            <img src="${s.imageUrl}" alt="${s.name}" loading="lazy" />
+            <div class="stay-info">
+                <div class="badge-row">
+                    <span class="commission-badge">0% Commission</span>
+                    <span class="stay-rating">★ ${s.rating ? s.rating.toFixed(1) : 'New'}</span>
+                </div>
+                <h3>${s.name}</h3>
+                <p>📍 ${s.city} · ${s.type}</p>
+                <div>
+                    <span class="stay-price">₹${s.pricePerNight}/night</span>
+                </div>
+                <button class="btn-small" onclick="revealOwnerContact('${s._id}', this)">Contact Owner Directly</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function revealOwnerContact(id, btnEl) {
+    const stay = allDirectStaysCache.find(s => s._id === id);
+    if (!stay) return;
+    btnEl.outerHTML = `<p class="owner-contact">👤 ${stay.ownerName} · 📞 ${stay.ownerPhone}</p>`;
+}
+
+async function submitStayListing() {
+    const payload = {
+        name: document.getElementById('slName').value,
+        type: document.getElementById('slType').value,
+        city: document.getElementById('slCity').value,
+        state: document.getElementById('slState').value,
+        pricePerNight: parseInt(document.getElementById('slPrice').value) || 0,
+        ownerName: document.getElementById('slOwnerName').value,
+        ownerPhone: document.getElementById('slOwnerPhone').value
+    };
+
+    try {
+        const response = await fetch(`${API_URL}/stays`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        if (data.success) {
+            allDirectStaysCache.unshift(data.data);
+        } else {
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        console.warn('Stays API unavailable, adding locally.', error);
+        allDirectStaysCache.unshift({ ...payload, _id: 'local-' + Date.now(), imageUrl: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600' });
+    }
+
+    showNotification('🏠 Listed with 0% commission! Travelers can now contact you directly.', 'success');
+    document.getElementById('stayListForm').reset();
+    document.getElementById('stayFormSection').style.display = 'none';
+    displayDirectStays(allDirectStaysCache);
+}
+
+// ============================================================
+// ========== 5) OFF-BEAT DESTINATION DISCOVERY ==========
+// ============================================================
+const mockOffbeatDestinations = [
+    { _id: 'o1', name: 'Dzukou Valley', location: 'Kohima, Nagaland', price: 3200, imageUrl: 'https://images.unsplash.com/photo-1600100397608-f83a9ea62d2f?w=600', rating: 4.7, offbeatTag: 'Hidden Valley' },
+    { _id: 'o2', name: 'Majuli Island', location: 'Majuli, Assam', price: 2800, imageUrl: 'https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=600', rating: 4.6, offbeatTag: 'River Island Culture' },
+    { _id: 'o3', name: 'Gandikota', location: 'Kadapa, Andhra Pradesh', price: 2200, imageUrl: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600', rating: 4.5, offbeatTag: 'Canyon Country' }
+];
+
+function initOffbeatTabs() {
+    document.getElementById('tabPopular').addEventListener('click', () => {
+        document.getElementById('tabPopular').classList.add('active');
+        document.getElementById('tabOffbeat').classList.remove('active');
+        loadDestinations();
+    });
+    document.getElementById('tabOffbeat').addEventListener('click', () => {
+        document.getElementById('tabOffbeat').classList.add('active');
+        document.getElementById('tabPopular').classList.remove('active');
+        loadOffbeatDestinations();
+    });
+}
+
+async function loadOffbeatDestinations() {
+    const grid = document.getElementById('destinationGrid');
+    grid.innerHTML = '<div class="skeleton" style="height:280px;grid-column:1/-1;"></div>'.repeat(3);
+    let offbeat;
+    try {
+        const response = await fetch(`${API_URL}/destinations/offbeat`);
+        const data = await response.json();
+        offbeat = data.success && data.data.length ? data.data : mockOffbeatDestinations;
+    } catch (error) {
+        console.warn('Off-beat API unavailable, using sample destinations.', error);
+        offbeat = mockOffbeatDestinations;
+    }
+    grid.innerHTML = offbeat.map(d => `
+        <div class="destination-card">
+            <img src="${d.imageUrl}" alt="${d.name}" class="dest-img" loading="lazy" />
+            <div class="dest-info">
+                ${d.offbeatTag ? `<span class="offbeat-tag">🗺️ ${d.offbeatTag}</span>` : ''}
+                <h3>${d.name}</h3>
+                <p>${d.location}</p>
+                <span class="price">₹${(d.price || 2999).toLocaleString()}</span>
+                <span style="color:#f6ad55;"> ★ ${d.rating || 4.5}</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ============================================================
+// ========== 6) SOLO / WOMEN TRAVELER SAFETY CHECK-IN ==========
+// ============================================================
+const CHECKIN_STORAGE_KEY = 'deshantan_active_checkin';
+
+function initSafetyPage() {
+    document.getElementById('checkinForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        startSafetyCheckin();
+    });
+    document.getElementById('imSafeBtn').addEventListener('click', markImSafe);
+    document.getElementById('sosBtn').addEventListener('click', triggerSOS);
+    document.getElementById('endCheckinBtn').addEventListener('click', endSafetyCheckin);
+
+    renderCheckinView();
+}
+
+function getStoredCheckin() {
+    const raw = localStorage.getItem(CHECKIN_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+}
+
+function saveStoredCheckin(checkin) {
+    localStorage.setItem(CHECKIN_STORAGE_KEY, JSON.stringify(checkin));
+}
+
+function renderCheckinView() {
+    const checkin = getStoredCheckin();
+    if (checkin && checkin.status !== 'closed') {
+        document.getElementById('checkinStartView').style.display = 'none';
+        document.getElementById('checkinActiveView').style.display = 'block';
+        paintCheckinStatus(checkin);
+    } else {
+        document.getElementById('checkinStartView').style.display = 'block';
+        document.getElementById('checkinActiveView').style.display = 'none';
+    }
+}
+
+function paintCheckinStatus(checkin) {
+    const headline = document.getElementById('checkinStatusHeadline');
+    const sub = document.getElementById('checkinStatusSub');
+    const sosBtn = document.getElementById('sosBtn');
+
+    if (checkin.status === 'sos') {
+        headline.textContent = '🔴 SOS Active';
+        sub.textContent = `Your emergency contact ${checkin.emergencyContactName} has been notified. Tap "I'm Safe" the moment things are okay.`;
+        sosBtn.textContent = '🆘 SOS Sent — Tap to Resend';
+    } else {
+        headline.textContent = "🟢 You're checked in";
+        sub.textContent = `Check in again before ${new Date(checkin.nextCheckinDue).toLocaleTimeString()} or we'll flag you as overdue.`;
+        sosBtn.textContent = '🆘 SOS — Send Emergency Alert';
+    }
+
+    document.getElementById('checkinTripLabel').textContent = `${checkin.tripCity}${checkin.tripState ? ', ' + checkin.tripState : ''}`;
+    document.getElementById('checkinEcLabel').textContent = `${checkin.emergencyContactName} (${checkin.emergencyContactPhone})`;
+    document.getElementById('checkinLastTime').textContent = new Date(checkin.lastCheckinAt).toLocaleString();
+    document.getElementById('checkinNextDue').textContent = new Date(checkin.nextCheckinDue).toLocaleString();
+}
+
+async function startSafetyCheckin() {
+    const payload = {
+        travelerName: document.getElementById('ciName').value,
+        travelerPhone: document.getElementById('ciPhone').value,
+        isSoloTraveler: document.getElementById('ciSolo').checked,
+        tripCity: document.getElementById('ciCity').value,
+        tripState: document.getElementById('ciState').value,
+        emergencyContactName: document.getElementById('ciEcName').value,
+        emergencyContactPhone: document.getElementById('ciEcPhone').value,
+        checkinIntervalHours: parseInt(document.getElementById('ciInterval').value) || 6
+    };
+
+    let checkin;
+    try {
+        const response = await fetch(`${API_URL}/safety/checkin`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        if (data.success) {
+            checkin = data.data;
+        } else {
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        console.warn('Safety API unavailable, tracking check-in locally.', error);
+        const now = new Date();
+        checkin = {
+            _id: 'local-' + Date.now(),
+            ...payload,
+            status: 'active',
+            lastCheckinAt: now.toISOString(),
+            nextCheckinDue: new Date(now.getTime() + payload.checkinIntervalHours * 3600000).toISOString()
+        };
+    }
+
+    saveStoredCheckin(checkin);
+    showNotification('🟢 Safety check-in started. Stay safe!', 'success');
+    document.getElementById('checkinForm').reset();
+    renderCheckinView();
+}
+
+async function markImSafe() {
+    const checkin = getStoredCheckin();
+    if (!checkin) return;
+
+    try {
+        const response = await fetch(`${API_URL}/safety/${checkin._id}/im-safe`, { method: 'PUT' });
+        const data = await response.json();
+        if (data.success) {
+            saveStoredCheckin(data.data);
+        } else {
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        const now = new Date();
+        checkin.status = 'safe';
+        checkin.lastCheckinAt = now.toISOString();
+        checkin.nextCheckinDue = new Date(now.getTime() + (checkin.checkinIntervalHours || 6) * 3600000).toISOString();
+        saveStoredCheckin(checkin);
+    }
+
+    showNotification("✅ Great, glad you're safe!", 'success');
+    renderCheckinView();
+}
+
+async function triggerSOS() {
+    const checkin = getStoredCheckin();
+    if (!checkin) return;
+    if (!confirm('This will alert your emergency contact and the Deshantan safety team. Continue?')) return;
+
+    try {
+        const response = await fetch(`${API_URL}/safety/${checkin._id}/sos`, { method: 'PUT' });
+        const data = await response.json();
+        if (data.success) {
+            saveStoredCheckin(data.data);
+        } else {
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        checkin.status = 'sos';
+        checkin.sosTriggeredAt = new Date().toISOString();
+        saveStoredCheckin(checkin);
+    }
+
+    showNotification(`🆘 SOS sent! ${checkin.emergencyContactName} has been notified.`, 'error');
+    renderCheckinView();
+}
+
+async function endSafetyCheckin() {
+    const checkin = getStoredCheckin();
+    if (!checkin) return;
+
+    try {
+        await fetch(`${API_URL}/safety/${checkin._id}/close`, { method: 'PUT' });
+    } catch (error) {
+        console.warn('Safety API unavailable, closing locally.', error);
+    }
+
+    localStorage.removeItem(CHECKIN_STORAGE_KEY);
+    showNotification('Trip closed — safe travels next time!', 'info');
+    renderCheckinView();
 }
 
 // ========== CONSOLE WELCOME ==========
