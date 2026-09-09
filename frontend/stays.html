@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Direct Stays (No Commission) - Deshantan</title>
+    <meta name="description" content="Book small hotels and homestays directly from the owner, with zero platform commission — Deshantan." />
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🌏</span>
+                <span class="logo-text">Deshantan</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#destinations">Destinations</a></li>
+                <li><a href="index.html#packages">Packages</a></li>
+                <li><a href="trip-planner.html">Plan Trip</a></li>
+                <li><a href="trust-hub.html">🛡️ Trust Hub</a></li>
+                <li><a href="stays.html" class="active">🏠 Stays</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-actions" id="navActions">
+                <button class="btn-login" id="openLogin">Sign In</button>
+                <button class="btn-signup" id="openSignup">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="security-hero">
+            <div class="security-hero-content">
+                <h1>🏠 Direct Stays — 0% Commission</h1>
+                <p>Small hotels & homestays, listed directly by their owners. No big-aggregator markup, ever.</p>
+            </div>
+        </section>
+
+        <section class="trust-filter-section">
+            <div class="trust-filter-bar">
+                <div class="form-group">
+                    <label for="stayCityFilter">City</label>
+                    <select id="stayCityFilter">
+                        <option value="">All cities</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="stayTypeFilter">Type</label>
+                    <select id="stayTypeFilter">
+                        <option value="">All types</option>
+                        <option value="hotel">Hotel</option>
+                        <option value="homestay">Homestay</option>
+                        <option value="guesthouse">Guesthouse</option>
+                        <option value="hostel">Hostel</option>
+                        <option value="resort">Resort</option>
+                    </select>
+                </div>
+                <button class="btn-planner" id="listYourStayBtn" type="button">➕ List Your Property</button>
+            </div>
+        </section>
+
+        <!-- List Your Property Form -->
+        <section class="planner-section" id="stayFormSection" style="display:none;">
+            <div class="planner-container" style="max-width:700px;">
+                <div class="form-step">
+                    <h2>🏡 List Your Property — Always 0% Commission</h2>
+                    <form id="stayListForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="slName">Property Name *</label>
+                                <input type="text" id="slName" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="slType">Type *</label>
+                                <select id="slType" required>
+                                    <option value="homestay">Homestay</option>
+                                    <option value="hotel">Hotel</option>
+                                    <option value="guesthouse">Guesthouse</option>
+                                    <option value="hostel">Hostel</option>
+                                    <option value="resort">Resort</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="slCity">City *</label>
+                                <input type="text" id="slCity" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="slState">State *</label>
+                                <input type="text" id="slState" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="slPrice">Price per Night (₹) *</label>
+                            <input type="number" id="slPrice" min="0" required />
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="slOwnerName">Your Name *</label>
+                                <input type="text" id="slOwnerName" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="slOwnerPhone">Your Phone *</label>
+                                <input type="tel" id="slOwnerPhone" required />
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-planner">List Property (0% commission)</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="planner-section">
+            <div class="planner-container" style="max-width:1200px;">
+                <div class="stays-grid" id="staysPageGrid">
+                    <div class="skeleton" style="height:260px;"></div>
+                    <div class="skeleton" style="height:260px;"></div>
+                    <div class="skeleton" style="height:260px;"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>🌏 Deshantan</h3>
+                <p>Your trusted travel partner for exploring the incredible India.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Trust & Safety</h4>
+                <a href="trust-hub.html">Trust Hub</a>
+                <a href="guides.html">Verified Guides</a>
+                <a href="alerts.html">Scam & Price Alerts</a>
+                <a href="eateries.html">Hygiene-Rated Eateries</a>
+                <a href="safety.html">Safety Check-in</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>📧 info@deshantan.com</p>
+                <p>📞 +91 98765 43210</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Deshantan Tourism. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-close" id="closeLogin" role="button" aria-label="Close login modal" tabindex="0">&times;</div>
+            <div class="auth-container">
+                <div class="auth-left">
+                    <h2>Welcome Back!</h2>
+                    <p>Sign in to continue your journey with Deshantan</p>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Email Address</label>
+                            <input type="email" id="loginEmail" name="email" placeholder="you@example.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" name="password" placeholder="••••••••" required />
+                        </div>
+                        <button type="submit" class="btn-auth">Sign In</button>
+                        <p class="auth-switch">Don't have an account? <span id="switchToSignup">Sign Up</span></p>
+                    </form>
+                </div>
+                <div class="auth-right">
+                    <img src="https://images.unsplash.com/photo-1532009324734-20f7f581ca4b?w=600" alt="Taj Mahal at sunset" loading="lazy" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <div class="modal-close" id="closeSignup" role="button" aria-label="Close signup modal" tabindex="0">&times;</div>
+            <div class="auth-container">
+                <div class="auth-left">
+                    <h2>Create Account</h2>
+                    <p>Start your adventure with Deshantan</p>
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label for="signupName">Full Name</label>
+                            <input type="text" id="signupName" name="fullName" placeholder="John Doe" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="signupEmail">Email Address</label>
+                            <input type="email" id="signupEmail" name="email" placeholder="you@example.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" name="password" placeholder="Min 6 characters" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="signupPhone">Phone Number</label>
+                            <input type="tel" id="signupPhone" name="phone" placeholder="+91 98765 43210" />
+                        </div>
+                        <button type="submit" class="btn-auth">Create Account</button>
+                        <p class="auth-switch">Already have an account? <span id="switchToLogin">Sign In</span></p>
+                    </form>
+                </div>
+                <div class="auth-right">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600" alt="Beautiful beach in India" loading="lazy" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
