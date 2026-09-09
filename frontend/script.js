@@ -524,112 +524,335 @@ if (exploreBtn) {
     });
 }
 
-// ========== TRIP PLANNER ==========
+// ========== TRIP PLANNER (Enhanced Multi-Step) ==========
+
+// Mock Data
+const mockStates = [
+    { name: "Uttar Pradesh", cities: ["Agra", "Varanasi", "Lucknow"] },
+    { name: "Rajasthan", cities: ["Jaipur", "Udaipur", "Jodhpur"] },
+    { name: "Kerala", cities: ["Kochi", "Alleppey", "Munnar"] },
+    { name: "Goa", cities: ["Panaji", "Calangute", "Margao"] },
+    { name: "Himachal Pradesh", cities: ["Shimla", "Manali", "Dharamshala"] },
+    { name: "Maharashtra", cities: ["Mumbai", "Pune", "Nashik"] },
+    { name: "Tamil Nadu", cities: ["Chennai", "Madurai", "Coimbatore"] },
+    { name: "Karnataka", cities: ["Bengaluru", "Mysuru", "Hampi"] }
+];
+
+const mockCitiesData = {
+    "Agra": {
+        lat: 27.1767, lng: 78.0081,
+        stays: [
+            { id: "stay1", name: "Taj View Hotel", img: "https://source.unsplash.com/400x300/?hotel,agra", price: 2500, rating: 4.5, lat: 27.1680, lng: 78.0420 },
+            { id: "stay2", name: "Grand Imperial", img: "https://source.unsplash.com/400x300/?hotel,luxury", price: 4500, rating: 4.8, lat: 27.1650, lng: 78.0300 },
+            { id: "stay3", name: "Budget Homestay", img: "https://source.unsplash.com/400x300/?homestay", price: 1200, rating: 4.0, lat: 27.1900, lng: 78.0100 }
+        ],
+        spots: [
+            { id: "spot1", name: "Taj Mahal", desc: "Iconic marble mausoleum", lat: 27.1751, lng: 78.0421, img: "https://source.unsplash.com/400x300/?tajmahal" },
+            { id: "spot2", name: "Agra Fort", desc: "Historical fort", lat: 27.1795, lng: 78.0211, img: "https://source.unsplash.com/400x300/?agrafort" },
+            { id: "spot3", name: "Mehtab Bagh", desc: "Garden with Taj view", lat: 27.1792, lng: 78.0589, img: "https://source.unsplash.com/400x300/?garden" },
+            { id: "spot4", name: "Fatehpur Sikri", desc: "Ancient city", lat: 27.0945, lng: 77.6679, img: "https://source.unsplash.com/400x300/?fatehpursikri" }
+        ]
+    },
+    "Jaipur": {
+        lat: 26.9124, lng: 75.7873,
+        stays: [
+            { id: "stay1", name: "Raj Mahal Palace", img: "https://source.unsplash.com/400x300/?palace,jaipur", price: 8000, rating: 4.9, lat: 26.9000, lng: 75.8000 },
+            { id: "stay2", name: "Heritage Haveli", img: "https://source.unsplash.com/400x300/?haveli", price: 3500, rating: 4.4, lat: 26.9200, lng: 75.7800 },
+            { id: "stay3", name: "Backpacker Hostel", img: "https://source.unsplash.com/400x300/?hostel", price: 800, rating: 4.2, lat: 26.9100, lng: 75.7900 }
+        ],
+        spots: [
+            { id: "spot1", name: "Hawa Mahal", desc: "Palace of Winds", lat: 26.9239, lng: 75.8267, img: "https://source.unsplash.com/400x300/?hawamahal" },
+            { id: "spot2", name: "Amber Fort", desc: "Hilltop fort", lat: 26.9855, lng: 75.8513, img: "https://source.unsplash.com/400x300/?amberfort" },
+            { id: "spot3", name: "City Palace", desc: "Royal residence", lat: 26.9255, lng: 75.8236, img: "https://source.unsplash.com/400x300/?citypalace" },
+            { id: "spot4", name: "Jantar Mantar", desc: "Astronomical observatory", lat: 26.9247, lng: 75.8244, img: "https://source.unsplash.com/400x300/?jantarmantar" }
+        ]
+    },
+    "Kochi": {
+        lat: 9.9312, lng: 76.2673,
+        stays: [
+            { id: "stay1", name: "Marine Drive Hotel", img: "https://source.unsplash.com/400x300/?hotel,kochi", price: 3000, rating: 4.3, lat: 9.9400, lng: 76.2700 },
+            { id: "stay2", name: "Fort Kochi Bungalow", img: "https://source.unsplash.com/400x300/?bungalow", price: 4500, rating: 4.7, lat: 9.9600, lng: 76.2400 },
+            { id: "stay3", name: "Backpackers Nest", img: "https://source.unsplash.com/400x300/?hostel", price: 600, rating: 4.0, lat: 9.9500, lng: 76.2600 }
+        ],
+        spots: [
+            { id: "spot1", name: "Fort Kochi Beach", desc: "Scenic beach", lat: 9.9610, lng: 76.2380, img: "https://source.unsplash.com/400x300/?beach,kochi" },
+            { id: "spot2", name: "Mattancherry Palace", desc: "Dutch palace", lat: 9.9580, lng: 76.2590, img: "https://source.unsplash.com/400x300/?palace" },
+            { id: "spot3", name: "Chinese Fishing Nets", desc: "Iconic nets", lat: 9.9600, lng: 76.2450, img: "https://source.unsplash.com/400x300/?fishingnets" },
+            { id: "spot4", name: "Jewish Synagogue", desc: "Historic synagogue", lat: 9.9570, lng: 76.2600, img: "https://source.unsplash.com/400x300/?synagogue" }
+        ]
+    },
+    "Panaji": {
+        lat: 15.4909, lng: 73.8278,
+        stays: [
+            { id: "stay1", name: "Miramar Residency", img: "https://source.unsplash.com/400x300/?hotel,goa", price: 3500, rating: 4.5, lat: 15.4800, lng: 73.8100 },
+            { id: "stay2", name: "Fontainhas Guesthouse", img: "https://source.unsplash.com/400x300/?guesthouse", price: 2000, rating: 4.2, lat: 15.5000, lng: 73.8300 },
+            { id: "stay3", name: "Beach Shack Stay", img: "https://source.unsplash.com/400x300/?beachshack", price: 1000, rating: 3.9, lat: 15.4700, lng: 73.8000 }
+        ],
+        spots: [
+            { id: "spot1", name: "Basilica of Bom Jesus", desc: "UNESCO church", lat: 15.5009, lng: 73.9112, img: "https://source.unsplash.com/400x300/?church,goa" },
+            { id: "spot2", name: "Dona Paula", desc: "Viewpoint", lat: 15.4520, lng: 73.8020, img: "https://source.unsplash.com/400x300/?viewpoint" },
+            { id: "spot3", name: "Miramar Beach", desc: "Popular beach", lat: 15.4800, lng: 73.8100, img: "https://source.unsplash.com/400x300/?beach" },
+            { id: "spot4", name: "Reis Magos Fort", desc: "Historic fort", lat: 15.4960, lng: 73.8100, img: "https://source.unsplash.com/400x300/?fort" }
+        ]
+    },
+    // Add more cities as needed
+};
+
+let currentStep = 1;
+let selectedStay = null;
+let selectedSpots = new Set();
+let itineraryOrder = [];
+
+// Helper: haversine distance (km)
+function haversine(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
+              Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+}
+
+// Populate state dropdowns
+function populateStates() {
+    const fromState = document.getElementById('fromState');
+    const toState = document.getElementById('toState');
+    mockStates.forEach(state => {
+        fromState.innerHTML += `<option value="${state.name}">${state.name}</option>`;
+        toState.innerHTML += `<option value="${state.name}">${state.name}</option>`;
+    });
+}
+
+// Update city dropdown when state changes
+function updateCities(stateSelect, citySelect) {
+    const stateName = stateSelect.value;
+    const cities = mockStates.find(s => s.name === stateName)?.cities || [];
+    citySelect.innerHTML = '<option value="">Select City</option>';
+    cities.forEach(city => {
+        citySelect.innerHTML += `<option value="${city}">${city}</option>`;
+    });
+    citySelect.disabled = cities.length === 0;
+}
+
+function checkStep1Validity() {
+    const allFilled = 
+        document.getElementById('fromState').value &&
+        document.getElementById('fromCity').value &&
+        document.getElementById('toState').value &&
+        document.getElementById('toCity').value &&
+        document.getElementById('travelDate').value;
+    document.getElementById('submitTripBtn').disabled = !allFilled;
+}
+
+// Step navigation
+function goToStep(step) {
+    document.querySelectorAll('.planner-step').forEach(el => el.classList.remove('active'));
+    document.getElementById('step' + step).classList.add('active');
+    
+    // Update step indicator
+    document.querySelectorAll('.step-item').forEach(item => {
+        const stepNum = parseInt(item.dataset.step);
+        item.classList.remove('active', 'completed');
+        if (stepNum < step) item.classList.add('completed');
+        if (stepNum === step) item.classList.add('active');
+    });
+    document.querySelectorAll('.step-line').forEach((line, index) => {
+        if (index + 1 < step) line.classList.add('completed');
+        else line.classList.remove('completed');
+    });
+    
+    currentStep = step;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Load stays with skeleton
+function loadStays() {
+    const city = document.getElementById('toCity').value;
+    const stays = mockCitiesData[city]?.stays || [];
+    const grid = document.getElementById('staysGrid');
+    
+    // Show skeleton
+    grid.innerHTML = '<div class="skeleton" style="height:200px; grid-column:1/-1;"></div>'.repeat(3);
+    
+    setTimeout(() => {
+        grid.innerHTML = stays.map(stay => `
+            <div class="stay-card" data-id="${stay.id}" onclick="selectStay('${stay.id}')">
+                <img src="${stay.img}" alt="${stay.name}" loading="lazy" />
+                <div class="stay-info">
+                    <h3>${stay.name}</h3>
+                    <p>Distance: ${haversine(stay.lat, stay.lng, mockCitiesData[city].lat, mockCitiesData[city].lng).toFixed(1)} km from city center</p>
+                    <div>
+                        <span class="stay-price">₹${stay.price}</span>
+                        <span class="stay-rating">★ ${stay.rating}</span>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }, 600);
+}
+
+function selectStay(stayId) {
+    selectedStay = stayId;
+    document.querySelectorAll('.stay-card').forEach(card => {
+        card.classList.toggle('selected', card.dataset.id === stayId);
+    });
+    document.getElementById('proceedToSpotsBtn').disabled = false;
+}
+
+// Load spots
+function loadSpots() {
+    const city = document.getElementById('toCity').value;
+    const spots = mockCitiesData[city]?.spots || [];
+    const grid = document.getElementById('spotsGrid');
+    
+    // Skeleton
+    grid.innerHTML = '<div class="skeleton" style="height:180px; grid-column:1/-1;"></div>'.repeat(4);
+    
+    setTimeout(() => {
+        grid.innerHTML = spots.map(spot => `
+            <div class="spot-card" data-id="${spot.id}" onclick="toggleSpot('${spot.id}')">
+                <img src="${spot.img}" alt="${spot.name}" loading="lazy" />
+                <div class="spot-info">
+                    <h3>${spot.name}</h3>
+                    <p>${spot.desc}</p>
+                </div>
+                <div class="spot-check">✓</div>
+            </div>
+        `).join('');
+    }, 600);
+}
+
+function toggleSpot(spotId) {
+    if (selectedSpots.has(spotId)) {
+        selectedSpots.delete(spotId);
+        document.querySelector(`.spot-card[data-id="${spotId}"]`).classList.remove('selected');
+    } else {
+        selectedSpots.add(spotId);
+        document.querySelector(`.spot-card[data-id="${spotId}"]`).classList.add('selected');
+    }
+    document.getElementById('generateItineraryBtn').disabled = selectedSpots.size === 0;
+}
+
+// Generate itinerary (optimized by proximity)
 function generateItinerary() {
-    const destination = document.getElementById('destination')?.value;
-    const travelType = document.getElementById('travelType')?.value;
-    const days = document.getElementById('days')?.value;
-    const budget = document.getElementById('budget')?.value;
-    const people = document.getElementById('people')?.value;
-
-    if (!destination || !travelType || !days || !budget || !people) {
-        showNotification('❌ Please fill in all fields', 'error');
-        return;
-    }
-
-    const interests = [];
-    document.querySelectorAll('.interest-checkbox input:checked').forEach(cb => {
-        interests.push(cb.value);
-    });
-
-    let itinerary = [];
-    const destinationNames = {
-        'taj-mahal': 'Taj Mahal, Agra',
-        'jaipur': 'Jaipur, Rajasthan',
-        'kerala': 'Kerala Backwaters',
-        'varanasi': 'Varanasi Ghats',
-        'goa': 'Goa Beaches',
-        'manali': 'Manali, Himachal Pradesh',
-        'multiple': 'Multiple Destinations'
-    };
-
-    const destName = destinationNames[destination] || 'India';
-
-    for (let i = 1; i <= Math.min(days, 7); i++) {
-        let dayPlan = { day: i, title: `Day ${i}`, activities: [] };
-        if (i === 1) {
-            dayPlan.activities.push('Arrival and check-in at hotel');
-            dayPlan.activities.push(`Explore local area of ${destName}`);
-        } else if (i === Math.min(days, 7)) {
-            dayPlan.activities.push('Check-out from hotel');
-            dayPlan.activities.push('Departure - Last minute shopping');
-        } else {
-            if (interests.includes('historical')) dayPlan.activities.push(`Visit historical sites in ${destName}`);
-            if (interests.includes('nature')) dayPlan.activities.push('Nature walk and photography');
-            if (interests.includes('adventure')) dayPlan.activities.push('Adventure activities');
-            if (interests.includes('food')) dayPlan.activities.push('Local food tasting tour');
-            if (interests.includes('culture')) dayPlan.activities.push('Cultural experience and local arts');
-            if (interests.includes('shopping')) dayPlan.activities.push('Shopping at local markets');
-            dayPlan.activities.push('Evening leisure and dinner');
-        }
-        itinerary.push(dayPlan);
-    }
-
-    displayItinerary(itinerary, destName, days, budget, people, travelType);
+    const city = document.getElementById('toCity').value;
+    const spots = mockCitiesData[city].spots;
+    const stay = mockCitiesData[city].stays.find(s => s.id === selectedStay);
+    
+    // Get selected spot objects
+    const selectedSpotsArray = spots.filter(spot => selectedSpots.has(spot.id));
+    
+    // Sort by distance from stay
+    selectedSpotsArray.sort((a, b) => 
+        haversine(stay.lat, stay.lng, a.lat, a.lng) - 
+        haversine(stay.lat, stay.lng, b.lat, b.lng)
+    );
+    
+    itineraryOrder = selectedSpotsArray;
+    renderItinerary();
+    goToStep(4);
 }
 
-function displayItinerary(itinerary, destination, days, budget, people, travelType) {
-    const resultsDiv = document.getElementById('plannerResults');
-    const contentDiv = document.getElementById('itineraryContent');
-
-    if (!resultsDiv || !contentDiv) return;
-
-    const travelTypeNames = { 'solo': 'Solo Traveler', 'couple': 'Couple', 'family': 'Family', 'friends': 'Friends Group', 'group': 'Large Group' };
-    const budgetNames = { 'budget': 'Budget (₹5,000-10,000)', 'standard': 'Standard (₹10,000-25,000)', 'premium': 'Premium (₹25,000-50,000)', 'luxury': 'Luxury (₹50,000+)' };
-
-    let html = `
-        <div style="margin-bottom:24px; padding:16px; background:#f0f4ff; border-radius:12px;">
-            <p><strong>📍 Destination:</strong> ${destination}</p>
-            <p><strong>👥 Travel Type:</strong> ${travelTypeNames[travelType] || travelType}</p>
-            <p><strong>📅 Duration:</strong> ${days} days</p>
-            <p><strong>💰 Budget:</strong> ${budgetNames[budget] || budget}</p>
-            <p><strong>👤 People:</strong> ${people}</p>
+function renderItinerary() {
+    const list = document.getElementById('itineraryList');
+    list.innerHTML = itineraryOrder.map((spot, index) => `
+        <div class="itinerary-item" draggable="true" data-id="${spot.id}">
+            <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
+            <span class="itinerary-number">${index + 1}</span>
+            <div class="itinerary-details">
+                <h4>${spot.name}</h4>
+                <p>${spot.desc}</p>
+            </div>
+            <div class="itinerary-actions">
+                <button class="btn-reorder" onclick="moveSpot(${index}, -1)" ${index === 0 ? 'disabled' : ''}>↑</button>
+                <button class="btn-reorder" onclick="moveSpot(${index}, 1)" ${index === itineraryOrder.length-1 ? 'disabled' : ''}>↓</button>
+            </div>
         </div>
-        <h3 style="margin-bottom:16px;">📋 Your ${days}-Day Itinerary</h3>
-    `;
-
-    itinerary.forEach(day => {
-        html += `<div class="itinerary-card"><h3>${day.title}</h3><ul style="list-style:none; padding:0; margin:0;">`;
-        day.activities.forEach(activity => {
-            html += `<li style="padding:4px 0; color:#4a5568;">✓ ${activity}</li>`;
-        });
-        html += `</ul></div>`;
+    `).join('');
+    
+    // Add drag and drop events
+    list.querySelectorAll('.itinerary-item').forEach(item => {
+        item.addEventListener('dragstart', handleDragStart);
+        item.addEventListener('dragover', handleDragOver);
+        item.addEventListener('drop', handleDrop);
+        item.addEventListener('dragend', handleDragEnd);
     });
-
-    html += `
-        <div style="margin-top:24px; padding:16px; background:#f0fff4; border-radius:12px; border:2px solid #48bb78;">
-            <h4 style="color:#22543d; margin-bottom:8px;">💡 Travel Tips</h4>
-            <ul style="list-style:none; padding:0; margin:0; color:#276749;">
-                <li>✓ Book hotels in advance</li>
-                <li>✓ Travel insurance recommended</li>
-                <li>✓ Check weather before packing</li>
-                <li>✓ Carry necessary medications</li>
-            </ul>
-        </div>
-        <div style="margin-top:16px; text-align:center; padding:16px; background:#ebf8ff; border-radius:12px;">
-            <p>📞 <strong>Need help customizing this itinerary?</strong> Call us at +91 98765 43210</p>
-        </div>
-    `;
-
-    contentDiv.innerHTML = html;
-    resultsDiv.style.display = 'block';
-    document.querySelector('.planner-form')?.style.display = 'none';
 }
 
-function resetPlanner() {
-    document.getElementById('plannerResults')?.style.display = 'none';
-    document.querySelector('.planner-form')?.style.display = 'block';
-    document.getElementById('plannerForm')?.reset();
+let draggedItem = null;
+
+function handleDragStart(e) {
+    draggedItem = this;
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', this.dataset.id);
+    this.style.opacity = '0.5';
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    const targetId = this.dataset.id;
+    const draggedId = e.dataTransfer.getData('text/plain');
+    if (draggedId !== targetId) {
+        const draggedIndex = itineraryOrder.findIndex(s => s.id === draggedId);
+        const targetIndex = itineraryOrder.findIndex(s => s.id === targetId);
+        const [moved] = itineraryOrder.splice(draggedIndex, 1);
+        itineraryOrder.splice(targetIndex, 0, moved);
+        renderItinerary();
+    }
+}
+
+function handleDragEnd(e) {
+    this.style.opacity = '1';
+    draggedItem = null;
+}
+
+function moveSpot(index, direction) {
+    const newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= itineraryOrder.length) return;
+    const [moved] = itineraryOrder.splice(index, 1);
+    itineraryOrder.splice(newIndex, 0, moved);
+    renderItinerary();
+}
+
+// Transport suggestions
+function showTransportSuggestions() {
+    const list = document.getElementById('transportList');
+    const transportModes = [
+        { icon: '🚶', mode: 'Walking', desc: 'For short distances', when: (dist) => dist < 1 },
+        { icon: '🛺', mode: 'Auto Rickshaw', desc: 'Cheap and quick for medium distances', when: (dist) => dist >= 1 && dist < 5 },
+        { icon: '🚕', mode: 'Cab / Taxi', desc: 'Comfortable for longer distances', when: (dist) => dist >= 5 },
+        { icon: '🚌', mode: 'Public Bus', desc: 'Economical but slower', when: () => false }
+    ];
+    
+    let html = '';
+    for (let i = 0; i < itineraryOrder.length - 1; i++) {
+        const current = itineraryOrder[i];
+        const next = itineraryOrder[i + 1];
+        const dist = haversine(current.lat, current.lng, next.lat, next.lng);
+        const mode = transportModes.find(m => m.when(dist)) || transportModes[3];
+        html += `
+            <div class="transport-card">
+                <div class="transport-icon">${mode.icon}</div>
+                <div class="transport-details">
+                    <h4>${current.name} → ${next.name}</h4>
+                    <p>${dist.toFixed(1)} km • ${mode.mode} (${mode.desc})</p>
+                </div>
+            </div>
+        `;
+    }
+    list.innerHTML = html;
+}
+
+function finishPlanning() {
+    showNotification('✅ Trip planned successfully! Check your email for details.', 'success');
+    // Optionally reset
 }
 
 // ========== PROFILE COMPLETION ==========
@@ -857,14 +1080,6 @@ function registerOthers() {
 // ========== INITIALIZATION ==========
 document.addEventListener('DOMContentLoaded', () => {
     // Attach event listeners for forms (if present)
-    const plannerForm = document.getElementById('plannerForm');
-    if (plannerForm) {
-        plannerForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            generateItinerary();
-        });
-    }
-
     const profileForm = document.getElementById('profileCompletionForm');
     if (profileForm) {
         document.querySelectorAll('#profileCompletionForm input, #profileCompletionForm select').forEach(field => {
@@ -898,6 +1113,48 @@ document.addEventListener('DOMContentLoaded', () => {
         othersForm.addEventListener('submit', function(e) {
             e.preventDefault();
             registerOthers();
+        });
+    }
+
+    // Trip Planner Multi-Step (if on trip-planner page)
+    if (document.getElementById('tripForm')) {
+        populateStates();
+        const fromState = document.getElementById('fromState');
+        const toState = document.getElementById('toState');
+        const fromCity = document.getElementById('fromCity');
+        const toCity = document.getElementById('toCity');
+        const travelDate = document.getElementById('travelDate');
+
+        fromState.addEventListener('change', function() {
+            updateCities(this, fromCity);
+            checkStep1Validity();
+        });
+        toState.addEventListener('change', function() {
+            updateCities(this, toCity);
+            checkStep1Validity();
+        });
+        fromCity.addEventListener('change', checkStep1Validity);
+        toCity.addEventListener('change', checkStep1Validity);
+        travelDate.addEventListener('change', checkStep1Validity);
+
+        // Set min date to today
+        travelDate.min = new Date().toISOString().split('T')[0];
+
+        document.getElementById('tripForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            goToStep(2);
+            loadStays();
+        });
+
+        // Button listeners for later steps
+        document.getElementById('proceedToSpotsBtn').addEventListener('click', () => {
+            goToStep(3);
+            loadSpots();
+        });
+        document.getElementById('generateItineraryBtn').addEventListener('click', generateItinerary);
+        document.getElementById('proceedToTransportBtn').addEventListener('click', () => {
+            showTransportSuggestions();
+            goToStep(5);
         });
     }
 

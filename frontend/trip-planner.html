@@ -8,6 +8,7 @@
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -36,159 +37,128 @@
         <section class="planner-hero">
             <div class="planner-hero-content">
                 <h1>✈️ Plan Your Dream Trip</h1>
-                <p>Tell us what you're looking for, and we'll create the perfect itinerary for you</p>
+                <p>Tell us where you want to go, and we'll craft the perfect itinerary</p>
             </div>
         </section>
 
-        <!-- Planner Form -->
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step-item active" data-step="1">
+                <span class="step-number">1</span>
+                <span class="step-label">Trip Details</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-item" data-step="2">
+                <span class="step-number">2</span>
+                <span class="step-label">Stay</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-item" data-step="3">
+                <span class="step-number">3</span>
+                <span class="step-label">Spots</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-item" data-step="4">
+                <span class="step-number">4</span>
+                <span class="step-label">Itinerary</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-item" data-step="5">
+                <span class="step-number">5</span>
+                <span class="step-label">Transport</span>
+            </div>
+        </div>
+
+        <!-- Planner Container -->
         <section class="planner-section">
             <div class="planner-container">
-                <form id="plannerForm" class="planner-form">
-                    <!-- Step 1: Basic Info -->
-                    <div class="form-step">
-                        <h2>📍 Where to?</h2>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="destination">Destination</label>
-                                <select id="destination" name="destination" required>
-                                    <option value="">Select a destination</option>
-                                    <option value="taj-mahal">Taj Mahal, Agra</option>
-                                    <option value="jaipur">Jaipur, Rajasthan</option>
-                                    <option value="kerala">Kerala Backwaters</option>
-                                    <option value="varanasi">Varanasi Ghats</option>
-                                    <option value="goa">Goa Beaches</option>
-                                    <option value="manali">Manali, Himachal</option>
-                                    <option value="multiple">Multiple Destinations</option>
-                                </select>
+                <!-- Step 1: Trip Input Form -->
+                <div class="planner-step active" id="step1">
+                    <form id="tripForm" class="planner-form">
+                        <div class="form-step">
+                            <h2>📍 Where are you starting and going?</h2>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fromState">Your Current State *</label>
+                                    <select id="fromState" name="fromState" required>
+                                        <option value="">Select State</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fromCity">Your Current City *</label>
+                                    <select id="fromCity" name="fromCity" required disabled>
+                                        <option value="">Select City</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="travelType">Travel Type</label>
-                                <select id="travelType" name="travelType" required>
-                                    <option value="">Select type</option>
-                                    <option value="solo">Solo Travel</option>
-                                    <option value="couple">Couple</option>
-                                    <option value="family">Family</option>
-                                    <option value="friends">Friends</option>
-                                    <option value="group">Group (10+)</option>
-                                </select>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="toState">Destination State *</label>
+                                    <select id="toState" name="toState" required>
+                                        <option value="">Select State</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="toCity">Destination City *</label>
+                                    <select id="toCity" name="toCity" required disabled>
+                                        <option value="">Select City</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="travelDate">Travel Date *</label>
+                                    <input type="date" id="travelDate" name="travelDate" required min="" />
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-planner" id="submitTripBtn" disabled>
+                                    Next: Choose Stay →
+                                </button>
                             </div>
                         </div>
-                    </div>
+                    </form>
+                </div>
 
-                    <!-- Step 2: Dates -->
-                    <div class="form-step">
-                        <h2>📅 When?</h2>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="startDate">Start Date</label>
-                                <input type="date" id="startDate" name="startDate" required />
-                            </div>
-                            <div class="form-group">
-                                <label for="endDate">End Date</label>
-                                <input type="date" id="endDate" name="endDate" required />
-                            </div>
-                            <div class="form-group">
-                                <label for="days">Number of Days</label>
-                                <input type="number" id="days" name="days" placeholder="e.g., 5" min="1" max="30" required />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 3: Budget -->
-                    <div class="form-step">
-                        <h2>💰 Budget</h2>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="budget">Budget per person</label>
-                                <select id="budget" name="budget" required>
-                                    <option value="">Select budget</option>
-                                    <option value="budget">Budget (₹5,000-10,000)</option>
-                                    <option value="standard">Standard (₹10,000-25,000)</option>
-                                    <option value="premium">Premium (₹25,000-50,000)</option>
-                                    <option value="luxury">Luxury (₹50,000+)</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="people">Number of People</label>
-                                <input type="number" id="people" name="people" placeholder="e.g., 2" min="1" max="50" required />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 4: Interests -->
-                    <div class="form-step">
-                        <h2>🎯 What interests you?</h2>
-                        <div class="interests-grid">
-                            <label class="interest-checkbox">
-                                <input type="checkbox" name="interests[]" value="historical" /> 🏛️ Historical
-                            </label>
-                            <label class="interest-checkbox">
-                                <input type="checkbox" name="interests[]" value="nature" /> 🌿 Nature & Wildlife
-                            </label>
-                            <label class="interest-checkbox">
-                                <input type="checkbox" name="interests[]" value="spiritual" /> 🕉️ Spiritual
-                            </label>
-                            <label class="interest-checkbox">
-                                <input type="checkbox" name="interests[]" value="adventure" /> 🏔️ Adventure
-                            </label>
-                            <label class="interest-checkbox">
-                                <input type="checkbox" name="interests[]" value="beach" /> 🏖️ Beaches
-                            </label>
-                            <label class="interest-checkbox">
-                                <input type="checkbox" name="interests[]" value="culture" /> 🎭 Culture & Arts
-                            </label>
-                            <label class="interest-checkbox">
-                                <input type="checkbox" name="interests[]" value="food" /> 🍛 Food & Cuisine
-                            </label>
-                            <label class="interest-checkbox">
-                                <input type="checkbox" name="interests[]" value="shopping" /> 🛍️ Shopping
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Step 5: Preferences -->
-                    <div class="form-step">
-                        <h2>⭐ Preferences</h2>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="accommodation">Accommodation</label>
-                                <select id="accommodation" name="accommodation">
-                                    <option value="any">Any</option>
-                                    <option value="hostel">Hostel/Dorm</option>
-                                    <option value="hotel">Budget Hotel</option>
-                                    <option value="resort">Resort</option>
-                                    <option value="luxury">Luxury Hotel</option>
-                                    <option value="homestay">Homestay</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="transport">Transport</label>
-                                <select id="transport" name="transport">
-                                    <option value="any">Any</option>
-                                    <option value="train">Train</option>
-                                    <option value="bus">Bus</option>
-                                    <option value="cab">Private Cab</option>
-                                    <option value="flight">Flight</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="specialRequirements">Special Requirements</label>
-                            <textarea id="specialRequirements" name="specialRequirements" rows="3" placeholder="Any special requirements, dietary needs, accessibility, etc."></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Submit -->
+                <!-- Step 2: Stay Suggestions -->
+                <div class="planner-step" id="step2">
+                    <h2>🏨 Choose Your Stay</h2>
+                    <div class="stays-grid" id="staysGrid"></div>
                     <div class="form-actions">
-                        <button type="submit" class="btn-planner">🎯 Plan My Trip</button>
+                        <button class="btn-planner-secondary" onclick="goToStep(1)">← Back</button>
+                        <button class="btn-planner" id="proceedToSpotsBtn" disabled>Next: Select Spots →</button>
                     </div>
-                </form>
+                </div>
 
-                <!-- Results Section -->
-                <div id="plannerResults" class="planner-results" style="display: none;">
-                    <h2>🗺️ Your Personalized Itinerary</h2>
-                    <div id="itineraryContent"></div>
-                    <button class="btn-planner" onclick="resetPlanner()">🔄 Plan Another Trip</button>
+                <!-- Step 3: Tourism Spots Selection -->
+                <div class="planner-step" id="step3">
+                    <h2>🎯 Select Tourism Spots</h2>
+                    <div class="spots-grid" id="spotsGrid"></div>
+                    <div class="form-actions">
+                        <button class="btn-planner-secondary" onclick="goToStep(2)">← Back</button>
+                        <button class="btn-planner" id="generateItineraryBtn" disabled>Generate Itinerary →</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Optimized Itinerary -->
+                <div class="planner-step" id="step4">
+                    <h2>📋 Your Optimized Itinerary</h2>
+                    <p class="step-subtitle">Reorder spots by dragging or use the up/down arrows</p>
+                    <div class="itinerary-list" id="itineraryList"></div>
+                    <div class="form-actions">
+                        <button class="btn-planner-secondary" onclick="goToStep(3)">← Back</button>
+                        <button class="btn-planner" id="proceedToTransportBtn">Next: Transport →</button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Transport Suggestion -->
+                <div class="planner-step" id="step5">
+                    <h2>🚗 Transport Suggestions</h2>
+                    <div class="transport-list" id="transportList"></div>
+                    <div class="form-actions">
+                        <button class="btn-planner-secondary" onclick="goToStep(4)">← Back</button>
+                        <button class="btn-planner" onclick="finishPlanning()">Finish Planning</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -220,6 +190,10 @@
             <p>&copy; 2026 Deshantan Tourism. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Login & Signup Modals (keep unchanged) -->
+    <div class="modal" id="loginModal">...</div>
+    <div class="modal" id="signupModal">...</div>
 
     <script src="script.js"></script>
 </body>
