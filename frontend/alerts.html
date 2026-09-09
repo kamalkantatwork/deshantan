@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About Deshantan - Explore India</title>
-    <meta name="description" content="About Deshantan - India's trusted travel partner for curated tours, authentic experiences, and unforgettable journeys across 500+ destinations." />
+    <title>Scam & Price Alerts - Deshantan</title>
+    <meta name="description" content="Crowdsourced, real-time scam and overpricing alerts from fellow travelers across India." />
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
@@ -21,9 +20,10 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="index.html#destinations">Destinations</a></li>
                 <li><a href="index.html#packages">Packages</a></li>
-                <li><a href="about.html" class="active">About</a></li>
                 <li><a href="trip-planner.html">Plan Trip</a></li>
                 <li><a href="trust-hub.html">🛡️ Trust Hub</a></li>
+                <li><a href="alerts.html" class="active">🚨 Alerts</a></li>
+                <li><a href="about.html">About</a></li>
             </ul>
             <div class="nav-actions" id="navActions">
                 <button class="btn-login" id="openLogin">Sign In</button>
@@ -33,179 +33,122 @@
     </nav>
 
     <main>
-        <!-- About Hero -->
-        <section class="about-hero">
-            <div class="about-hero-content">
-                <h1>About Deshantan</h1>
-                <p>Your trusted companion for exploring the incredible diversity of India</p>
+        <section class="security-hero">
+            <div class="security-hero-content">
+                <h1>🚨 Scam & Price Alerts</h1>
+                <p>Crowdsourced reports from real travelers — touts, overcharging, fake guides and unsafe areas</p>
             </div>
         </section>
 
-        <!-- Mission Section -->
-        <section class="mission-section">
-            <div class="mission-container">
-                <div class="mission-text">
-                    <h2>Our Mission</h2>
-                    <p>At Deshantan, we believe that travel is not just about visiting places—it's about creating memories, understanding cultures, and experiencing the magic that makes India unique.</p>
-                    <p>We curate authentic travel experiences that connect you with the heart of India, from the snow-capped Himalayas to the sun-kissed beaches of Goa.</p>
+        <section class="trust-filter-section">
+            <div class="trust-filter-bar">
+                <div class="form-group">
+                    <label for="alertCityFilter">City</label>
+                    <select id="alertCityFilter">
+                        <option value="">All cities</option>
+                    </select>
                 </div>
-                <div class="mission-stats">
-                    <div class="stat-card">
-                        <span class="stat-number">500+</span>
-                        <span class="stat-label">Destinations</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">50K+</span>
-                        <span class="stat-label">Happy Travelers</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">4.9★</span>
-                        <span class="stat-label">Average Rating</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">100+</span>
-                        <span class="stat-label">Tour Guides</span>
-                    </div>
+                <div class="form-group">
+                    <label for="alertCategoryFilter">Category</label>
+                    <select id="alertCategoryFilter">
+                        <option value="">All categories</option>
+                        <option value="scam">Scam</option>
+                        <option value="overpricing">Overpricing</option>
+                        <option value="fake_guide">Fake Guide</option>
+                        <option value="unsafe_area">Unsafe Area</option>
+                        <option value="touting">Touting</option>
+                        <option value="other">Other</option>
+                    </select>
                 </div>
+                <button class="btn-planner" id="toggleAlertFormBtn" type="button">➕ Report an Alert</button>
             </div>
         </section>
 
-        <!-- Values Section -->
-        <section class="values-section">
-            <h2>Why Choose Deshantan?</h2>
-            <div class="values-grid">
-                <div class="value-card">
-                    <div class="value-icon">🎯</div>
-                    <h3>Curated Experiences</h3>
-                    <p>Every itinerary is carefully designed by travel experts to ensure you get the best experience.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">🤝</div>
-                    <h3>Local Connections</h3>
-                    <p>We work with local guides and communities to give you authentic cultural experiences.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">💚</div>
-                    <h3>Sustainable Travel</h3>
-                    <p>We promote responsible tourism that benefits local communities and preserves natural heritage.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">🛡️</div>
-                    <h3>Safety First</h3>
-                    <p>Your safety is our top priority. We ensure all our partners meet the highest safety standards.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">💰</div>
-                    <h3>Best Price Guarantee</h3>
-                    <p>We offer competitive prices without compromising on quality and service.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">📞</div>
-                    <h3>24/7 Support</h3>
-                    <p>Our team is available around the clock to assist you with any questions or issues.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Team Section -->
-        <section class="team-section">
-            <h2>Meet Our Team</h2>
-            <p class="team-subtitle">Passionate travelers who love to share the beauty of India</p>
-            <div class="team-grid">
-                <div class="team-card">
-                    <img src="https://ui-avatars.com/api/?name=Arjun+Mehta&background=667eea&color=fff&size=128" alt="Arjun Mehta - Founder & CEO" class="team-img" loading="lazy" />
-                    <h3>Arjun Mehta</h3>
-                    <p class="team-role">Founder & CEO</p>
-                    <p>Travel enthusiast with 15 years of experience in the tourism industry.</p>
-                </div>
-                <div class="team-card">
-                    <img src="https://ui-avatars.com/api/?name=Priya+Sharma&background=f093fb&color=fff&size=128" alt="Priya Sharma - Head of Operations" class="team-img" loading="lazy" />
-                    <h3>Priya Sharma</h3>
-                    <p class="team-role">Head of Operations</p>
-                    <p>Expert in curating unique travel experiences across India.</p>
-                </div>
-                <div class="team-card">
-                    <img src="https://ui-avatars.com/api/?name=Vikram+Singh&background=48bb78&color=fff&size=128" alt="Vikram Singh - Lead Tour Guide" class="team-img" loading="lazy" />
-                    <h3>Vikram Singh</h3>
-                    <p class="team-role">Lead Tour Guide</p>
-                    <p>Knows the hidden gems of India like the back of his hand.</p>
-                </div>
-                <div class="team-card">
-                    <img src="https://ui-avatars.com/api/?name=Ananya+Reddy&background=f56565&color=fff&size=128" alt="Ananya Reddy - Customer Experience" class="team-img" loading="lazy" />
-                    <h3>Ananya Reddy</h3>
-                    <p class="team-role">Customer Experience</p>
-                    <p>Ensures every traveler has a memorable and hassle-free journey.</p>
+        <!-- Report Alert Form -->
+        <section class="planner-section" id="alertFormSection" style="display:none;">
+            <div class="planner-container" style="max-width:700px;">
+                <div class="form-step">
+                    <h2>📝 Report a Scam / Price Issue</h2>
+                    <form id="alertForm">
+                        <div class="form-group">
+                            <label for="alTitle">Short Title *</label>
+                            <input type="text" id="alTitle" placeholder="e.g. Overpriced taxi from station" required />
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="alCity">City *</label>
+                                <input type="text" id="alCity" placeholder="e.g. Agra" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="alCategory">Category *</label>
+                                <select id="alCategory" required>
+                                    <option value="">Select</option>
+                                    <option value="scam">Scam</option>
+                                    <option value="overpricing">Overpricing</option>
+                                    <option value="fake_guide">Fake Guide</option>
+                                    <option value="unsafe_area">Unsafe Area</option>
+                                    <option value="touting">Touting</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="alDescription">What happened? *</label>
+                            <textarea id="alDescription" rows="3" required placeholder="Describe what happened, so other travelers can avoid it"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="alSeverity">Severity</label>
+                                <select id="alSeverity">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="alFairPrice">Fair Price Note (optional)</label>
+                                <input type="text" id="alFairPrice" placeholder="e.g. Should cost ₹150, not ₹500" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="alName">Your Name (optional)</label>
+                            <input type="text" id="alName" placeholder="Anonymous Traveler" />
+                        </div>
+                        <button type="submit" class="btn-planner">Post Alert</button>
+                    </form>
                 </div>
             </div>
         </section>
 
-        <!-- Testimonials -->
-        <section class="testimonials-section">
-            <h2>What Our Travelers Say</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>"Deshantan made our trip to Rajasthan absolutely magical! The attention to detail and local experiences were incredible."</p>
-                    <div class="testimonial-author">
-                        <span class="author-name">Rahul & Family</span>
-                        <span class="author-location">Mumbai, Maharashtra</span>
-                    </div>
+        <section class="planner-section">
+            <div class="planner-container" style="max-width:900px;">
+                <div class="itinerary-list" id="alertsFeed">
+                    <div class="skeleton" style="height:120px;"></div>
+                    <div class="skeleton" style="height:120px;"></div>
+                    <div class="skeleton" style="height:120px;"></div>
                 </div>
-                <div class="testimonial-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>"The Kerala houseboat experience was unforgettable. Deshantan's team took care of everything. Highly recommended!"</p>
-                    <div class="testimonial-author">
-                        <span class="author-name">Sarah & James</span>
-                        <span class="author-location">London, UK</span>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>"From the Himalayas to the backwaters, Deshantan showed us the true beauty of India. The guides were amazing!"</p>
-                    <div class="testimonial-author">
-                        <span class="author-name">Alex & Team</span>
-                        <span class="author-location">Berlin, Germany</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact CTA -->
-        <section class="contact-cta">
-            <div class="cta-content">
-                <h2>Ready to Explore India?</h2>
-                <p>Join thousands of happy travelers who have experienced the magic of India with Deshantan</p>
-                <a href="index.html#packages" class="btn-cta">Start Your Journey</a>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-col">
                 <h3>🌏 Deshantan</h3>
                 <p>Your trusted travel partner for exploring the incredible India.</p>
-                <div class="social-icons">
-                    <a href="#" aria-label="Instagram">📸</a>
-                    <a href="#" aria-label="Facebook">📘</a>
-                    <a href="#" aria-label="Twitter">🐦</a>
-                    <a href="#" aria-label="WhatsApp">📱</a>
-                </div>
             </div>
             <div class="footer-col">
-                <h4>Quick Links</h4>
-                <a href="index.html">Home</a>
-                <a href="index.html#destinations">Destinations</a>
-                <a href="index.html#packages">Packages</a>
-                <a href="about.html">About</a>
-                <a href="trip-planner.html">Plan Trip</a>
+                <h4>Trust & Safety</h4>
+                <a href="trust-hub.html">Trust Hub</a>
+                <a href="guides.html">Verified Guides</a>
+                <a href="eateries.html">Hygiene-Rated Eateries</a>
+                <a href="stays.html">Direct Stay Listings</a>
+                <a href="safety.html">Safety Check-in</a>
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
                 <p>📧 info@deshantan.com</p>
                 <p>📞 +91 98765 43210</p>
-                <p>🕐 Mon-Sat: 9AM - 8PM</p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -213,8 +156,6 @@
         </div>
     </footer>
 
-    <!-- Auth Modals -->
-    <!-- Login Modal -->
     <div class="modal" id="loginModal">
         <div class="modal-content">
             <div class="modal-close" id="closeLogin" role="button" aria-label="Close login modal" tabindex="0">&times;</div>
@@ -241,8 +182,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Signup Modal -->
     <div class="modal" id="signupModal">
         <div class="modal-content">
             <div class="modal-close" id="closeSignup" role="button" aria-label="Close signup modal" tabindex="0">&times;</div>
