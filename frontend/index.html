@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Deshantan - Explore India</title>
+    <meta name="description" content="Discover India like never before with Deshantan. Explore 500+ destinations, curated tour packages, and authentic experiences from the Himalayas to Kerala." />
+    <link rel="icon" href="data:," />
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
 </head>
@@ -32,167 +34,187 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero-section">
-        <div class="hero-overlay">
-            <div class="hero-content">
-                <h1>
-                    <span class="gradient-text">Discover India</span>
-                    <br />
-                    Like Never Before
-                </h1>
-                <p>
-                    From the majestic Himalayas to the serene backwaters of Kerala,
-                    experience the magic of India with Deshantan.
-                </p>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">500+</span>
-                        <span class="stat-label">Destinations</span>
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <div class="hero-overlay">
+                <div class="hero-content">
+                    <h1>
+                        <span class="gradient-text">Discover India</span>
+                        <br />
+                        Like Never Before
+                    </h1>
+                    <p>
+                        From the majestic Himalayas to the serene backwaters of Kerala,
+                        experience the magic of India with Deshantan.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">Destinations</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">50K+</span>
+                            <span class="stat-label">Happy Travelers</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">4.9★</span>
+                            <span class="stat-label">Rating</span>
+                        </div>
                     </div>
-                    <div class="stat">
-                        <span class="stat-number">50K+</span>
-                        <span class="stat-label">Happy Travelers</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">4.9★</span>
-                        <span class="stat-label">Rating</span>
+                    <div class="hero-buttons">
+                        <button class="btn-hero" id="exploreBtn">Explore Now</button>
+                        <a href="business-register.html" class="btn-hero-secondary">List Your Business</a>
                     </div>
                 </div>
-                <div class="hero-buttons">
-                    <button class="btn-hero" id="exploreBtn">Explore Now</button>
-                    <a href="business-register.html" class="btn-hero-secondary">List Your Business</a>
+            </div>
+        </section>
+
+        <!-- Destinations -->
+        <section id="destinations" class="destinations-section">
+            <div class="section-header">
+                <h2>Popular Destinations</h2>
+                <p>Explore India's most breathtaking destinations</p>
+            </div>
+            <div class="destination-grid" id="destinationGrid">
+                <!-- Dynamically loaded -->
+            </div>
+        </section>
+
+        <!-- Packages -->
+        <section id="packages" class="packages-section">
+            <div class="section-header">
+                <h2>Featured Tour Packages</h2>
+                <p>Curated experiences for every traveler</p>
+            </div>
+            <div class="packages-grid" id="packageGrid">
+                <!-- Dynamically loaded -->
+            </div>
+        </section>
+
+        <!-- Why Choose Us -->
+        <section class="features-section">
+            <div class="section-header">
+                <h2>Why Choose Deshantan?</h2>
+                <p>We make your travel experience unforgettable</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Curated Experiences</h3>
+                    <p>Handpicked destinations and activities for every traveler</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Local Connections</h3>
+                    <p>Authentic experiences with local guides and communities</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💚</div>
+                    <h3>Sustainable Travel</h3>
+                    <p>Responsible tourism that benefits local communities</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Safety First</h3>
+                    <p>Highest safety standards for all our travelers</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Best Price</h3>
+                    <p>Competitive prices without compromising on quality</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📞</div>
+                    <h3>24/7 Support</h3>
+                    <p>Round-the-clock assistance for all your travel needs</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Destinations -->
-    <section id="destinations" class="destinations-section">
-        <div class="section-header">
-            <h2>Popular Destinations</h2>
-            <p>Explore India's most breathtaking destinations</p>
-        </div>
-        <div class="destination-grid" id="destinationGrid">
-            <!-- Dynamically loaded -->
-        </div>
-    </section>
-
-    <!-- Packages -->
-    <section id="packages" class="packages-section">
-        <div class="section-header">
-            <h2>Featured Tour Packages</h2>
-            <p>Curated experiences for every traveler</p>
-        </div>
-        <div class="packages-grid" id="packageGrid">
-            <!-- Dynamically loaded -->
-        </div>
-    </section>
-
-    <!-- Why Choose Us -->
-    <section class="features-section">
-        <div class="section-header">
-            <h2>Why Choose Deshantan?</h2>
-            <p>We make your travel experience unforgettable</p>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3>Curated Experiences</h3>
-                <p>Handpicked destinations and activities for every traveler</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🤝</div>
-                <h3>Local Connections</h3>
-                <p>Authentic experiences with local guides and communities</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">💚</div>
-                <h3>Sustainable Travel</h3>
-                <p>Responsible tourism that benefits local communities</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🛡️</div>
-                <h3>Safety First</h3>
-                <p>Highest safety standards for all our travelers</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">💰</div>
-                <h3>Best Price</h3>
-                <p>Competitive prices without compromising on quality</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📞</div>
-                <h3>24/7 Support</h3>
-                <p>Round-the-clock assistance for all your travel needs</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Business CTA -->
-    <section class="business-cta-section">
-        <div class="business-cta-content">
-            <div class="business-cta-text">
-                <h2>🏪 List Your Business</h2>
-                <p>Are you a hotel, restaurant, tour guide, or shop owner? Connect with thousands of travelers visiting India every day.</p>
-                <ul>
-                    <li>✅ Reach millions of travelers</li>
-                    <li>✅ Get free listing & exposure</li>
-                    <li>✅ Receive direct bookings</li>
-                    <li>✅ Grow your tourism business</li>
-                </ul>
-                <a href="business-register.html" class="btn-business-cta">Register Your Business →</a>
-            </div>
-            <div class="business-cta-image">
-                <div class="business-icons">
-                    <span>🏨</span>
-                    <span>🍽️</span>
-                    <span>🛍️</span>
-                    <span>🚗</span>
-                    <span>🧑‍🏫</span>
-                    <span>🏠</span>
+        <!-- Business CTA -->
+        <section class="business-cta-section">
+            <div class="business-cta-content">
+                <div class="business-cta-text">
+                    <h2>🏪 List Your Business</h2>
+                    <p>Are you a hotel, restaurant, tour guide, or shop owner? Connect with thousands of travelers visiting India every day.</p>
+                    <ul>
+                        <li>✅ Reach millions of travelers</li>
+                        <li>✅ Get free listing & exposure</li>
+                        <li>✅ Receive direct bookings</li>
+                        <li>✅ Grow your tourism business</li>
+                    </ul>
+                    <a href="business-register.html" class="btn-business-cta">Register Your Business →</a>
+                </div>
+                <div class="business-cta-image">
+                    <div class="business-icons">
+                        <span>🏨</span>
+                        <span>🍽️</span>
+                        <span>🛍️</span>
+                        <span>🚗</span>
+                        <span>🧑‍🏫</span>
+                        <span>🏠</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact -->
-    <section id="contact" class="contact-section">
-        <div class="section-header">
-            <h2>📞 Plan Your Trip</h2>
-            <p>Let us help you create the perfect itinerary</p>
-        </div>
-        <div class="contact-container">
-            <div class="contact-info">
-                <h3>Get in Touch</h3>
-                <p>📧 info@deshantan.com</p>
-                <p>📞 +91 98765 43210</p>
-                <p>🕐 Mon-Sat: 9AM - 8PM</p>
-                <div class="social-links">
-                    <a href="#">📸 Instagram</a>
-                    <a href="#">📘 Facebook</a>
-                    <a href="#">🐦 Twitter</a>
-                </div>
+        <!-- Contact -->
+        <section id="contact" class="contact-section">
+            <div class="section-header">
+                <h2>📞 Plan Your Trip</h2>
+                <p>Let us help you create the perfect itinerary</p>
             </div>
-            <form class="contact-form" id="bookingForm">
-                <h3>Send Inquiry</h3>
-                <input type="text" placeholder="Full Name" required />
-                <input type="email" placeholder="Email Address" required />
-                <input type="tel" placeholder="Phone Number" />
-                <select required>
-                    <option value="">Select Destination</option>
-                    <option>Taj Mahal</option>
-                    <option>Jaipur</option>
-                    <option>Kerala</option>
-                    <option>Varanasi</option>
-                    <option>Goa</option>
-                </select>
-                <input type="date" required />
-                <textarea placeholder="Special requests..." rows="4"></textarea>
-                <button type="submit" class="btn-submit">Send Inquiry</button>
-            </form>
-        </div>
-    </section>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <p>📧 info@deshantan.com</p>
+                    <p>📞 +91 98765 43210</p>
+                    <p>🕐 Mon-Sat: 9AM - 8PM</p>
+                    <div class="social-links">
+                        <a href="#">📸 Instagram</a>
+                        <a href="#">📘 Facebook</a>
+                        <a href="#">🐦 Twitter</a>
+                    </div>
+                </div>
+                <form class="contact-form" id="bookingForm">
+                    <h3>Send Inquiry</h3>
+                    <div class="form-group">
+                        <label for="bookingName">Full Name</label>
+                        <input type="text" id="bookingName" name="fullName" placeholder="Full Name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingEmail">Email Address</label>
+                        <input type="email" id="bookingEmail" name="email" placeholder="Email Address" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingPhone">Phone Number</label>
+                        <input type="tel" id="bookingPhone" name="phone" placeholder="Phone Number" />
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingDestination">Select Destination</label>
+                        <select id="bookingDestination" name="destination" required>
+                            <option value="">Select Destination</option>
+                            <option>Taj Mahal</option>
+                            <option>Jaipur</option>
+                            <option>Kerala</option>
+                            <option>Varanasi</option>
+                            <option>Goa</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingDate">Travel Date</label>
+                        <input type="date" id="bookingDate" name="travelDate" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingMessage">Special Requests</label>
+                        <textarea id="bookingMessage" name="message" placeholder="Special requests..." rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Send Inquiry</button>
+                </form>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -201,10 +223,10 @@
                 <h3>🌏 Deshantan</h3>
                 <p>Your trusted travel partner for exploring the incredible India.</p>
                 <div class="social-icons">
-                    <a href="#">📸</a>
-                    <a href="#">📘</a>
-                    <a href="#">🐦</a>
-                    <a href="#">📱</a>
+                    <a href="#" aria-label="Instagram">📸</a>
+                    <a href="#" aria-label="Facebook">📘</a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                    <a href="#" aria-label="WhatsApp">📱</a>
                 </div>
             </div>
             <div class="footer-col">
@@ -239,19 +261,19 @@
     <!-- Login Modal -->
     <div class="modal" id="loginModal">
         <div class="modal-content">
-            <div class="modal-close" id="closeLogin">&times;</div>
+            <div class="modal-close" id="closeLogin" role="button" aria-label="Close login modal" tabindex="0">&times;</div>
             <div class="auth-container">
                 <div class="auth-left">
                     <h2>Welcome Back!</h2>
                     <p>Sign in to continue your journey with Deshantan</p>
                     <form id="loginForm">
                         <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="email" id="loginEmail" placeholder="you@example.com" required />
+                            <label for="loginEmail">Email Address</label>
+                            <input type="email" id="loginEmail" name="email" placeholder="you@example.com" required />
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" id="loginPassword" placeholder="••••••••" required />
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" name="password" placeholder="••••••••" required />
                         </div>
                         <button type="submit" class="btn-auth">Sign In</button>
                         <p class="auth-switch">
@@ -260,7 +282,7 @@
                     </form>
                 </div>
                 <div class="auth-right">
-                    <img src="https://images.unsplash.com/photo-1532009324734-20f7f581ca4b?w=600" alt="Travel" />
+                    <img src="https://images.unsplash.com/photo-1532009324734-20f7f581ca4b?w=600" alt="Taj Mahal at sunset" loading="lazy" />
                 </div>
             </div>
         </div>
@@ -269,27 +291,27 @@
     <!-- Signup Modal -->
     <div class="modal" id="signupModal">
         <div class="modal-content">
-            <div class="modal-close" id="closeSignup">&times;</div>
+            <div class="modal-close" id="closeSignup" role="button" aria-label="Close signup modal" tabindex="0">&times;</div>
             <div class="auth-container">
                 <div class="auth-left">
                     <h2>Create Account</h2>
                     <p>Start your adventure with Deshantan</p>
                     <form id="signupForm">
                         <div class="form-group">
-                            <label>Full Name</label>
-                            <input type="text" id="signupName" placeholder="John Doe" required />
+                            <label for="signupName">Full Name</label>
+                            <input type="text" id="signupName" name="fullName" placeholder="John Doe" required />
                         </div>
                         <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="email" id="signupEmail" placeholder="you@example.com" required />
+                            <label for="signupEmail">Email Address</label>
+                            <input type="email" id="signupEmail" name="email" placeholder="you@example.com" required />
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" id="signupPassword" placeholder="Min 6 characters" required />
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" name="password" placeholder="Min 6 characters" required />
                         </div>
                         <div class="form-group">
-                            <label>Phone Number</label>
-                            <input type="tel" id="signupPhone" placeholder="+91 98765 43210" />
+                            <label for="signupPhone">Phone Number</label>
+                            <input type="tel" id="signupPhone" name="phone" placeholder="+91 98765 43210" />
                         </div>
                         <button type="submit" class="btn-auth">Create Account</button>
                         <p class="auth-switch">
@@ -298,7 +320,7 @@
                     </form>
                 </div>
                 <div class="auth-right">
-                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600" alt="Travel" />
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600" alt="Beautiful beach in India" loading="lazy" />
                 </div>
             </div>
         </div>

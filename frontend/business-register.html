@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register Your Business - Deshantan</title>
+    <meta name="description" content="List your tourism business on Deshantan and connect with millions of travelers visiting India. Register hotels, restaurants, tours, transport, and more." />
+    <link rel="icon" href="data:," />
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
 </head>
@@ -29,189 +31,191 @@
         </div>
     </nav>
 
-    <section class="business-hero">
-        <div class="business-hero-content">
-            <h1>🏪 List Your Business</h1>
-            <p>Connect with millions of travelers visiting India. Grow your tourism business with Deshantan.</p>
-        </div>
-    </section>
+    <main>
+        <section class="business-hero">
+            <div class="business-hero-content">
+                <h1>🏪 List Your Business</h1>
+                <p>Connect with millions of travelers visiting India. Grow your tourism business with Deshantan.</p>
+            </div>
+        </section>
 
-    <section class="business-section">
-        <div class="business-container">
-            <form id="businessForm" class="business-form">
-                <!-- Step 1: Business Type -->
-                <div class="form-step">
-                    <h2>📋 What type of business?</h2>
-                    <div class="business-types">
-                        <label class="business-option">
-                            <input type="radio" name="businessType" value="hotel" required />
-                            <span>🏨</span>
-                            <h4>Hotel / Resort</h4>
-                            <p>Accommodation for travelers</p>
-                        </label>
-                        <label class="business-option">
-                            <input type="radio" name="businessType" value="restaurant" />
-                            <span>🍽️</span>
-                            <h4>Restaurant / Cafe</h4>
-                            <p>Food and dining</p>
-                        </label>
-                        <label class="business-option">
-                            <input type="radio" name="businessType" value="shop" />
-                            <span>🛍️</span>
-                            <h4>Shop / Souvenir</h4>
-                            <p>Shopping and local products</p>
-                        </label>
-                        <label class="business-option">
-                            <input type="radio" name="businessType" value="transport" />
-                            <span>🚗</span>
-                            <h4>Transport / Cab</h4>
-                            <p>Travel and transportation</p>
-                        </label>
-                        <label class="business-option">
-                            <input type="radio" name="businessType" value="guide" />
-                            <span>🧑‍🏫</span>
-                            <h4>Tour Guide</h4>
-                            <p>Guided tours and experiences</p>
-                        </label>
-                        <label class="business-option">
-                            <input type="radio" name="businessType" value="activity" />
-                            <span>🎫</span>
-                            <h4>Activity Provider</h4>
-                            <p>Tours, activities, experiences</p>
-                        </label>
-                        <label class="business-option">
-                            <input type="radio" name="businessType" value="homestay" />
-                            <span>🏠</span>
-                            <h4>Homestay / Hostel</h4>
-                            <p>Budget accommodation</p>
-                        </label>
-                        <label class="business-option">
-                            <input type="radio" name="businessType" value="other" />
-                            <span>📌</span>
-                            <h4>Other</h4>
-                            <p>Tourism-related business</p>
-                        </label>
+        <section class="business-section">
+            <div class="business-container">
+                <form id="businessForm" class="business-form">
+                    <!-- Step 1: Business Type -->
+                    <div class="form-step">
+                        <h2>📋 What type of business?</h2>
+                        <div class="business-types">
+                            <label class="business-option">
+                                <input type="radio" name="businessType" value="hotel" required />
+                                <span>🏨</span>
+                                <h4>Hotel / Resort</h4>
+                                <p>Accommodation for travelers</p>
+                            </label>
+                            <label class="business-option">
+                                <input type="radio" name="businessType" value="restaurant" />
+                                <span>🍽️</span>
+                                <h4>Restaurant / Cafe</h4>
+                                <p>Food and dining</p>
+                            </label>
+                            <label class="business-option">
+                                <input type="radio" name="businessType" value="shop" />
+                                <span>🛍️</span>
+                                <h4>Shop / Souvenir</h4>
+                                <p>Shopping and local products</p>
+                            </label>
+                            <label class="business-option">
+                                <input type="radio" name="businessType" value="transport" />
+                                <span>🚗</span>
+                                <h4>Transport / Cab</h4>
+                                <p>Travel and transportation</p>
+                            </label>
+                            <label class="business-option">
+                                <input type="radio" name="businessType" value="guide" />
+                                <span>🧑‍🏫</span>
+                                <h4>Tour Guide</h4>
+                                <p>Guided tours and experiences</p>
+                            </label>
+                            <label class="business-option">
+                                <input type="radio" name="businessType" value="activity" />
+                                <span>🎫</span>
+                                <h4>Activity Provider</h4>
+                                <p>Tours, activities, experiences</p>
+                            </label>
+                            <label class="business-option">
+                                <input type="radio" name="businessType" value="homestay" />
+                                <span>🏠</span>
+                                <h4>Homestay / Hostel</h4>
+                                <p>Budget accommodation</p>
+                            </label>
+                            <label class="business-option">
+                                <input type="radio" name="businessType" value="other" />
+                                <span>📌</span>
+                                <h4>Other</h4>
+                                <p>Tourism-related business</p>
+                            </label>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Step 2: Business Details -->
-                <div class="form-step">
-                    <h2>🏢 Business Details</h2>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Business Name *</label>
-                            <input type="text" id="businessName" placeholder="Your business name" required />
+                    <!-- Step 2: Business Details -->
+                    <div class="form-step">
+                        <h2>🏢 Business Details</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="businessName">Business Name *</label>
+                                <input type="text" id="businessName" name="businessName" placeholder="Your business name" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPerson">Contact Person Name *</label>
+                                <input type="text" id="contactPerson" name="contactPerson" placeholder="Your full name" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="businessEmail">Email Address *</label>
+                                <input type="email" id="businessEmail" name="businessEmail" placeholder="business@example.com" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="businessPhone">Phone Number *</label>
+                                <input type="tel" id="businessPhone" name="businessPhone" placeholder="+91 98765 43210" required />
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label>Contact Person Name *</label>
-                            <input type="text" id="contactPerson" placeholder="Your full name" required />
+                            <label for="businessAddress">Business Address *</label>
+                            <input type="text" id="businessAddress" name="businessAddress" placeholder="Full address with city, state" required />
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Email Address *</label>
-                            <input type="email" id="businessEmail" placeholder="business@example.com" required />
-                        </div>
-                        <div class="form-group">
-                            <label>Phone Number *</label>
-                            <input type="tel" id="businessPhone" placeholder="+91 98765 43210" required />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Business Address *</label>
-                        <input type="text" id="businessAddress" placeholder="Full address with city, state" required />
-                    </div>
-                </div>
 
-                <!-- Step 3: Business Description -->
-                <div class="form-step">
-                    <h2>📝 About Your Business</h2>
-                    <div class="form-group">
-                        <label>Description *</label>
-                        <textarea id="businessDescription" rows="4" placeholder="Tell travelers about your business..." required></textarea>
-                    </div>
-                    <div class="form-row">
+                    <!-- Step 3: Business Description -->
+                    <div class="form-step">
+                        <h2>📝 About Your Business</h2>
                         <div class="form-group">
-                            <label>Website (optional)</label>
-                            <input type="url" id="businessWebsite" placeholder="https://yourwebsite.com" />
+                            <label for="businessDescription">Description *</label>
+                            <textarea id="businessDescription" name="businessDescription" rows="4" placeholder="Tell travelers about your business..." required></textarea>
                         </div>
-                        <div class="form-group">
-                            <label>Social Media (optional)</label>
-                            <input type="text" id="businessSocial" placeholder="@yourbusiness" />
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="businessWebsite">Website (optional)</label>
+                                <input type="url" id="businessWebsite" name="businessWebsite" placeholder="https://yourwebsite.com" />
+                            </div>
+                            <div class="form-group">
+                                <label for="businessSocial">Social Media (optional)</label>
+                                <input type="text" id="businessSocial" name="businessSocial" placeholder="@yourbusiness" />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Step 4: Services & Pricing -->
-                <div class="form-step">
-                    <h2>💰 Services & Pricing</h2>
-                    <div class="form-group">
-                        <label>Services Offered *</label>
-                        <select id="services" multiple required>
-                            <option value="accommodation">Accommodation</option>
-                            <option value="dining">Dining / Meals</option>
-                            <option value="tours">Tours & Sightseeing</option>
-                            <option value="transport">Transport</option>
-                            <option value="shopping">Shopping</option>
-                            <option value="activities">Activities / Adventures</option>
-                            <option value="events">Events / Festivals</option>
-                            <option value="other">Other Services</option>
-                        </select>
-                        <small>Hold Ctrl (Windows) or Cmd (Mac) to select multiple</small>
-                    </div>
-                    <div class="form-row">
+                    <!-- Step 4: Services & Pricing -->
+                    <div class="form-step">
+                        <h2>💰 Services & Pricing</h2>
                         <div class="form-group">
-                            <label>Price Range (₹)</label>
-                            <select id="priceRange">
-                                <option value="budget">Budget (₹0-500)</option>
-                                <option value="mid">Mid-Range (₹500-2000)</option>
-                                <option value="premium">Premium (₹2000-5000)</option>
-                                <option value="luxury">Luxury (₹5000+)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Languages Spoken</label>
-                            <select id="languages" multiple>
-                                <option value="english">English</option>
-                                <option value="hindi">Hindi</option>
-                                <option value="tamil">Tamil</option>
-                                <option value="telugu">Telugu</option>
-                                <option value="kannada">Kannada</option>
-                                <option value="malayalam">Malayalam</option>
-                                <option value="bengali">Bengali</option>
-                                <option value="french">French</option>
-                                <option value="german">German</option>
-                                <option value="spanish">Spanish</option>
+                            <label for="services">Services Offered *</label>
+                            <select id="services" name="services[]" multiple required>
+                                <option value="accommodation">Accommodation</option>
+                                <option value="dining">Dining / Meals</option>
+                                <option value="tours">Tours & Sightseeing</option>
+                                <option value="transport">Transport</option>
+                                <option value="shopping">Shopping</option>
+                                <option value="activities">Activities / Adventures</option>
+                                <option value="events">Events / Festivals</option>
+                                <option value="other">Other Services</option>
                             </select>
                             <small>Hold Ctrl (Windows) or Cmd (Mac) to select multiple</small>
                         </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="priceRange">Price Range (₹)</label>
+                                <select id="priceRange" name="priceRange">
+                                    <option value="budget">Budget (₹0-500)</option>
+                                    <option value="mid">Mid-Range (₹500-2000)</option>
+                                    <option value="premium">Premium (₹2000-5000)</option>
+                                    <option value="luxury">Luxury (₹5000+)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="languages">Languages Spoken</label>
+                                <select id="languages" name="languages[]" multiple>
+                                    <option value="english">English</option>
+                                    <option value="hindi">Hindi</option>
+                                    <option value="tamil">Tamil</option>
+                                    <option value="telugu">Telugu</option>
+                                    <option value="kannada">Kannada</option>
+                                    <option value="malayalam">Malayalam</option>
+                                    <option value="bengali">Bengali</option>
+                                    <option value="french">French</option>
+                                    <option value="german">German</option>
+                                    <option value="spanish">Spanish</option>
+                                </select>
+                                <small>Hold Ctrl (Windows) or Cmd (Mac) to select multiple</small>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Submit -->
-                <div class="form-actions">
-                    <button type="submit" class="btn-business">✅ List My Business</button>
-                </div>
-            </form>
+                    <!-- Submit -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn-business">✅ List My Business</button>
+                    </div>
+                </form>
 
-            <!-- Success Message -->
-            <div id="businessSuccess" class="business-success" style="display: none;">
-                <div class="success-content">
-                    <h2>🎉 Business Registered!</h2>
-                    <p>Your business has been submitted for review. We'll verify and list it within 24 hours.</p>
-                    <ul>
-                        <li>✅ Business verification in progress</li>
-                        <li>📧 We'll send you a confirmation email</li>
-                        <li>🌐 Your business will appear in our listings</li>
-                    </ul>
-                    <div style="margin-top:24px;">
-                        <a href="index.html" class="btn-business">🏠 Back to Home</a>
-                        <button onclick="resetBusinessForm()" class="btn-business-secondary" style="margin-left:12px;">📋 Register Another</button>
+                <!-- Success Message -->
+                <div id="businessSuccess" class="business-success" style="display: none;">
+                    <div class="success-content">
+                        <h2>🎉 Business Registered!</h2>
+                        <p>Your business has been submitted for review. We'll verify and list it within 24 hours.</p>
+                        <ul>
+                            <li>✅ Business verification in progress</li>
+                            <li>📧 We'll send you a confirmation email</li>
+                            <li>🌐 Your business will appear in our listings</li>
+                        </ul>
+                        <div style="margin-top:24px;">
+                            <a href="index.html" class="btn-business">🏠 Back to Home</a>
+                            <button onclick="resetBusinessForm()" class="btn-business-secondary" style="margin-left:12px;">📋 Register Another</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer class="footer">
         <div class="footer-container">

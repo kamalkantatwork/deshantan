@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Others Registration - Deshantan</title>
+    <meta name="description" content="Register as hygiene and support staff with Deshantan. Keep India clean, safe, and beautiful for travelers. Join our team of inspectors, cleaners, and environmental officers." />
+    <link rel="icon" href="data:," />
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
 </head>
@@ -31,216 +33,218 @@
         </div>
     </nav>
 
-    <section class="others-hero">
-        <div class="others-hero-content">
-            <h1>🧹 Hygiene & Support Registration</h1>
-            <p>Keep India clean, safe, and beautiful for travelers</p>
-        </div>
-    </section>
+    <main>
+        <section class="others-hero">
+            <div class="others-hero-content">
+                <h1>🧹 Hygiene & Support Registration</h1>
+                <p>Keep India clean, safe, and beautiful for travelers</p>
+            </div>
+        </section>
 
-    <section class="others-section">
-        <div class="others-container">
-            <form id="othersForm" class="others-form">
-                <!-- Step 1: Personal Details -->
-                <div class="form-step">
-                    <h2>👤 Personal Details</h2>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Full Name *</label>
-                            <input type="text" id="otherName" placeholder="Your full name" required />
+        <section class="others-section">
+            <div class="others-container">
+                <form id="othersForm" class="others-form">
+                    <!-- Step 1: Personal Details -->
+                    <div class="form-step">
+                        <h2>👤 Personal Details</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="otherName">Full Name *</label>
+                                <input type="text" id="otherName" name="fullName" placeholder="Your full name" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="otherEmail">Email Address *</label>
+                                <input type="email" id="otherEmail" name="email" placeholder="you@example.com" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="otherPhone">Phone Number *</label>
+                                <input type="tel" id="otherPhone" name="phone" placeholder="+91 98765 43210" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="otherDob">Date of Birth</label>
+                                <input type="date" id="otherDob" name="dateOfBirth" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="otherGender">Gender</label>
+                                <select id="otherGender" name="gender">
+                                    <option value="">Select</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="otherNationality">Nationality</label>
+                                <input type="text" id="otherNationality" name="nationality" placeholder="e.g., Indian" />
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label>Email Address *</label>
-                            <input type="email" id="otherEmail" placeholder="you@example.com" required />
+                            <label for="otherAddress">Address / Location</label>
+                            <input type="text" id="otherAddress" name="address" placeholder="City, State, Area" />
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Phone Number *</label>
-                            <input type="tel" id="otherPhone" placeholder="+91 98765 43210" required />
-                        </div>
-                        <div class="form-group">
-                            <label>Date of Birth</label>
-                            <input type="date" id="otherDob" />
+
+                    <!-- Step 2: Role Selection -->
+                    <div class="form-step">
+                        <h2>🧹 Select Your Role</h2>
+                        <div class="others-types">
+                            <label class="others-option">
+                                <input type="radio" name="othersType" value="hygiene_inspector" required />
+                                <span>🧹</span>
+                                <h4>Hygiene Inspector</h4>
+                                <p>Inspect and ensure cleanliness standards</p>
+                            </label>
+                            <label class="others-option">
+                                <input type="radio" name="othersType" value="cleanliness_crew" />
+                                <span>🧼</span>
+                                <h4>Cleanliness Crew</h4>
+                                <p>Maintain clean public spaces</p>
+                            </label>
+                            <label class="others-option">
+                                <input type="radio" name="othersType" value="sanitation_staff" />
+                                <span>🚮</span>
+                                <h4>Sanitation Staff</h4>
+                                <p>Waste management and sanitation</p>
+                            </label>
+                            <label class="others-option">
+                                <input type="radio" name="othersType" value="environment_officer" />
+                                <span>🌿</span>
+                                <h4>Environment Officer</h4>
+                                <p>Protect natural surroundings</p>
+                            </label>
+                            <label class="others-option">
+                                <input type="radio" name="othersType" value="health_inspector" />
+                                <span>🏥</span>
+                                <h4>Health Inspector</h4>
+                                <p>Health and safety compliance</p>
+                            </label>
+                            <label class="others-option">
+                                <input type="radio" name="othersType" value="waste_management" />
+                                <span>♻️</span>
+                                <h4>Waste Management</h4>
+                                <p>Recycling and waste processing</p>
+                            </label>
+                            <label class="others-option">
+                                <input type="radio" name="othersType" value="water_quality" />
+                                <span>💧</span>
+                                <h4>Water Quality Tester</h4>
+                                <p>Monitor water safety</p>
+                            </label>
+                            <label class="others-option">
+                                <input type="radio" name="othersType" value="green_tourism" />
+                                <span>🌳</span>
+                                <h4>Green Tourism Officer</h4>
+                                <p>Sustainable tourism practices</p>
+                            </label>
+                            <label class="others-option">
+                                <input type="radio" name="othersType" value="other_support" />
+                                <span>📌</span>
+                                <h4>Other Support</h4>
+                                <p>Any other hygiene/support role</p>
+                            </label>
                         </div>
                     </div>
-                    <div class="form-row">
+
+                    <!-- Step 3: Experience & Qualifications -->
+                    <div class="form-step">
+                        <h2>📋 Experience & Qualifications</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="otherExperience">Years of Experience</label>
+                                <input type="number" id="otherExperience" name="yearsExperience" placeholder="e.g., 3" min="0" max="50" />
+                            </div>
+                            <div class="form-group">
+                                <label for="otherWorkArea">Area of Work *</label>
+                                <input type="text" id="otherWorkArea" name="workArea" placeholder="City, Tourist Zone, Area" required />
+                            </div>
+                        </div>
                         <div class="form-group">
-                            <label>Gender</label>
-                            <select id="otherGender">
-                                <option value="">Select</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
+                            <label for="otherQualifications">Qualifications / Certifications</label>
+                            <input type="text" id="otherQualifications" name="qualifications" placeholder="e.g., Diploma in Sanitation, Waste Management Certification" />
+                        </div>
+                        <div class="form-group">
+                            <label for="otherPreviousExp">Previous Experience</label>
+                            <textarea id="otherPreviousExp" name="previousExperience" rows="3" placeholder="Describe your previous work experience..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Skills & Languages -->
+                    <div class="form-step">
+                        <h2>🗣️ Skills & Languages</h2>
+                        <div class="form-group">
+                            <label for="otherLanguages">Languages Spoken *</label>
+                            <select id="otherLanguages" name="languages[]" multiple required>
+                                <option value="english">English</option>
+                                <option value="hindi">Hindi</option>
+                                <option value="tamil">Tamil</option>
+                                <option value="telugu">Telugu</option>
+                                <option value="kannada">Kannada</option>
+                                <option value="malayalam">Malayalam</option>
+                                <option value="bengali">Bengali</option>
+                                <option value="odia">Odia</option>
+                                <option value="punjabi">Punjabi</option>
                             </select>
+                            <small>Hold Ctrl (Windows) or Cmd (Mac) to select multiple</small>
                         </div>
                         <div class="form-group">
-                            <label>Nationality</label>
-                            <input type="text" id="otherNationality" placeholder="e.g., Indian" />
+                            <label>Skills (Select all that apply)</label>
+                            <div class="skills-grid">
+                                <label class="skill-checkbox-other">
+                                    <input type="checkbox" name="skills[]" value="cleaning" /> 🧹 Cleaning
+                                </label>
+                                <label class="skill-checkbox-other">
+                                    <input type="checkbox" name="skills[]" value="waste_management" /> ♻️ Waste Management
+                                </label>
+                                <label class="skill-checkbox-other">
+                                    <input type="checkbox" name="skills[]" value="inspection" /> 🔍 Inspection
+                                </label>
+                                <label class="skill-checkbox-other">
+                                    <input type="checkbox" name="skills[]" value="reporting" /> 📊 Reporting
+                                </label>
+                                <label class="skill-checkbox-other">
+                                    <input type="checkbox" name="skills[]" value="communication" /> 📡 Communication
+                                </label>
+                                <label class="skill-checkbox-other">
+                                    <input type="checkbox" name="skills[]" value="team_work" /> 👥 Team Work
+                                </label>
+                                <label class="skill-checkbox-other">
+                                    <input type="checkbox" name="skills[]" value="environmental" /> 🌿 Environmental Awareness
+                                </label>
+                                <label class="skill-checkbox-other">
+                                    <input type="checkbox" name="skills[]" value="training" /> 🎓 Training
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Address / Location</label>
-                        <input type="text" id="otherAddress" placeholder="City, State, Area" />
-                    </div>
-                </div>
 
-                <!-- Step 2: Role Selection -->
-                <div class="form-step">
-                    <h2>🧹 Select Your Role</h2>
-                    <div class="others-types">
-                        <label class="others-option">
-                            <input type="radio" name="othersType" value="hygiene_inspector" required />
-                            <span>🧹</span>
-                            <h4>Hygiene Inspector</h4>
-                            <p>Inspect and ensure cleanliness standards</p>
-                        </label>
-                        <label class="others-option">
-                            <input type="radio" name="othersType" value="cleanliness_crew" />
-                            <span>🧼</span>
-                            <h4>Cleanliness Crew</h4>
-                            <p>Maintain clean public spaces</p>
-                        </label>
-                        <label class="others-option">
-                            <input type="radio" name="othersType" value="sanitation_staff" />
-                            <span>🚮</span>
-                            <h4>Sanitation Staff</h4>
-                            <p>Waste management and sanitation</p>
-                        </label>
-                        <label class="others-option">
-                            <input type="radio" name="othersType" value="environment_officer" />
-                            <span>🌿</span>
-                            <h4>Environment Officer</h4>
-                            <p>Protect natural surroundings</p>
-                        </label>
-                        <label class="others-option">
-                            <input type="radio" name="othersType" value="health_inspector" />
-                            <span>🏥</span>
-                            <h4>Health Inspector</h4>
-                            <p>Health and safety compliance</p>
-                        </label>
-                        <label class="others-option">
-                            <input type="radio" name="othersType" value="waste_management" />
-                            <span>♻️</span>
-                            <h4>Waste Management</h4>
-                            <p>Recycling and waste processing</p>
-                        </label>
-                        <label class="others-option">
-                            <input type="radio" name="othersType" value="water_quality" />
-                            <span>💧</span>
-                            <h4>Water Quality Tester</h4>
-                            <p>Monitor water safety</p>
-                        </label>
-                        <label class="others-option">
-                            <input type="radio" name="othersType" value="green_tourism" />
-                            <span>🌳</span>
-                            <h4>Green Tourism Officer</h4>
-                            <p>Sustainable tourism practices</p>
-                        </label>
-                        <label class="others-option">
-                            <input type="radio" name="othersType" value="other_support" />
-                            <span>📌</span>
-                            <h4>Other Support</h4>
-                            <p>Any other hygiene/support role</p>
-                        </label>
+                    <!-- Submit -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn-others">✅ Register as Support Staff</button>
                     </div>
-                </div>
+                </form>
 
-                <!-- Step 3: Experience & Qualifications -->
-                <div class="form-step">
-                    <h2>📋 Experience & Qualifications</h2>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Years of Experience</label>
-                            <input type="number" id="otherExperience" placeholder="e.g., 3" min="0" max="50" />
+                <!-- Success Message -->
+                <div id="othersSuccess" class="others-success" style="display: none;">
+                    <div class="success-content">
+                        <h2>🧹 Registration Complete!</h2>
+                        <p>Your support profile has been submitted for verification.</p>
+                        <ul>
+                            <li>✅ Profile under review</li>
+                            <li>📧 Confirmation email sent</li>
+                            <li>🧹 You'll be notified once verified</li>
+                        </ul>
+                        <div style="margin-top:24px;">
+                            <a href="index.html" class="btn-others">🏠 Back to Home</a>
                         </div>
-                        <div class="form-group">
-                            <label>Area of Work *</label>
-                            <input type="text" id="otherWorkArea" placeholder="City, Tourist Zone, Area" required />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Qualifications / Certifications</label>
-                        <input type="text" id="otherQualifications" placeholder="e.g., Diploma in Sanitation, Waste Management Certification" />
-                    </div>
-                    <div class="form-group">
-                        <label>Previous Experience</label>
-                        <textarea id="otherPreviousExp" rows="3" placeholder="Describe your previous work experience..."></textarea>
-                    </div>
-                </div>
-
-                <!-- Step 4: Skills & Languages -->
-                <div class="form-step">
-                    <h2>🗣️ Skills & Languages</h2>
-                    <div class="form-group">
-                        <label>Languages Spoken *</label>
-                        <select id="otherLanguages" multiple required>
-                            <option value="english">English</option>
-                            <option value="hindi">Hindi</option>
-                            <option value="tamil">Tamil</option>
-                            <option value="telugu">Telugu</option>
-                            <option value="kannada">Kannada</option>
-                            <option value="malayalam">Malayalam</option>
-                            <option value="bengali">Bengali</option>
-                            <option value="odia">Odia</option>
-                            <option value="punjabi">Punjabi</option>
-                        </select>
-                        <small>Hold Ctrl (Windows) or Cmd (Mac) to select multiple</small>
-                    </div>
-                    <div class="form-group">
-                        <label>Skills (Select all that apply)</label>
-                        <div class="skills-grid">
-                            <label class="skill-checkbox-other">
-                                <input type="checkbox" value="cleaning" /> 🧹 Cleaning
-                            </label>
-                            <label class="skill-checkbox-other">
-                                <input type="checkbox" value="waste_management" /> ♻️ Waste Management
-                            </label>
-                            <label class="skill-checkbox-other">
-                                <input type="checkbox" value="inspection" /> 🔍 Inspection
-                            </label>
-                            <label class="skill-checkbox-other">
-                                <input type="checkbox" value="reporting" /> 📊 Reporting
-                            </label>
-                            <label class="skill-checkbox-other">
-                                <input type="checkbox" value="communication" /> 📡 Communication
-                            </label>
-                            <label class="skill-checkbox-other">
-                                <input type="checkbox" value="team_work" /> 👥 Team Work
-                            </label>
-                            <label class="skill-checkbox-other">
-                                <input type="checkbox" value="environmental" /> 🌿 Environmental Awareness
-                            </label>
-                            <label class="skill-checkbox-other">
-                                <input type="checkbox" value="training" /> 🎓 Training
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Submit -->
-                <div class="form-actions">
-                    <button type="submit" class="btn-others">✅ Register as Support Staff</button>
-                </div>
-            </form>
-
-            <!-- Success Message -->
-            <div id="othersSuccess" class="others-success" style="display: none;">
-                <div class="success-content">
-                    <h2>🧹 Registration Complete!</h2>
-                    <p>Your support profile has been submitted for verification.</p>
-                    <ul>
-                        <li>✅ Profile under review</li>
-                        <li>📧 Confirmation email sent</li>
-                        <li>🧹 You'll be notified once verified</li>
-                    </ul>
-                    <div style="margin-top:24px;">
-                        <a href="index.html" class="btn-others">🏠 Back to Home</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer class="footer">
         <div class="footer-container">

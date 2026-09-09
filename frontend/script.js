@@ -22,6 +22,7 @@ function setUser(user) {
 function logout() {
     localStorage.removeItem('deshantan_token');
     localStorage.removeItem('deshantan_user');
+    localStorage.removeItem('deshantan_profile_completed');
     window.location.href = 'index.html';
 }
 
@@ -116,8 +117,13 @@ function showNotification(message, type = 'info') {
 // ========== AUTH FUNCTIONS ==========
 async function handleLogin(e) {
     e.preventDefault();
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
+    const email = document.getElementById('loginEmail')?.value;
+    const password = document.getElementById('loginPassword')?.value;
+
+    if (!email || !password) {
+        showNotification('❌ Please fill in all fields', 'error');
+        return;
+    }
 
     try {
         const response = await fetch(`${API_URL}/auth/login`, {
@@ -134,7 +140,7 @@ async function handleLogin(e) {
             closeModal(loginModal);
             showNotification('✅ Welcome back, ' + data.user.name + '!', 'success');
             updateUIForLoggedInUser(data.user);
-            document.getElementById('loginForm').reset();
+            document.getElementById('loginForm')?.reset();
             loadDestinations();
             loadPackages();
         } else {
@@ -148,10 +154,15 @@ async function handleLogin(e) {
 
 async function handleSignup(e) {
     e.preventDefault();
-    const name = document.getElementById('signupName').value;
-    const email = document.getElementById('signupEmail').value;
-    const password = document.getElementById('signupPassword').value;
-    const phone = document.getElementById('signupPhone').value;
+    const name = document.getElementById('signupName')?.value;
+    const email = document.getElementById('signupEmail')?.value;
+    const password = document.getElementById('signupPassword')?.value;
+    const phone = document.getElementById('signupPhone')?.value;
+
+    if (!name || !email || !password) {
+        showNotification('❌ Please fill in all required fields', 'error');
+        return;
+    }
 
     if (password.length < 6) {
         showNotification('❌ Password must be at least 6 characters', 'error');
@@ -173,7 +184,7 @@ async function handleSignup(e) {
             closeModal(signupModal);
             showNotification('🎉 Welcome to Deshantan, ' + data.user.name + '!', 'success');
             updateUIForLoggedInUser(data.user);
-            document.getElementById('signupForm').reset();
+            document.getElementById('signupForm')?.reset();
             loadDestinations();
             loadPackages();
         } else {
@@ -201,7 +212,6 @@ function updateUIForLoggedInUser(user) {
         </div>
     `;
 
-    // Add styles if not present
     if (!document.getElementById('userStyles')) {
         const style = document.createElement('style');
         style.id = 'userStyles';
@@ -427,8 +437,6 @@ async function loadDashboardData() {
             const user = data.user;
             document.getElementById('dashboardName').textContent = user.name;
             document.getElementById('userName').textContent = user.name;
-
-            // Load bookings
             loadUserBookings();
         }
     } catch (error) {
@@ -438,42 +446,16 @@ async function loadDashboardData() {
 }
 
 async function loadUserBookings() {
-    try {
-        const token = getToken();
-        const response = await fetch(`${API_URL}/bookings/my-bookings`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const data = await response.json();
-
-        const bookingsList = document.getElementById('bookingsList');
-        if (!bookingsList) return;
-
-        if (data.success && data.data.length > 0) {
-            document.getElementById('totalBookings').textContent = data.data.length;
-            bookingsList.innerHTML = data.data.map(booking => `
-                <div class="booking-card">
-                    <div class="booking-header">
-                        <span class="booking-id">#${booking.bookingReference || 'N/A'}</span>
-                        <span class="booking-status ${booking.bookingStatus}">${booking.bookingStatus}</span>
-                    </div>
-                    <div class="booking-details">
-                        <p><strong>Package:</strong> ${booking.package?.name || booking.destination?.name || 'N/A'}</p>
-                        <p><strong>Date:</strong> ${new Date(booking.travelDate).toLocaleDateString()}</p>
-                        <p><strong>People:</strong> ${booking.peopleCount}</p>
-                        <p><strong>Amount:</strong> ₹${booking.totalAmount.toLocaleString()}</p>
-                    </div>
-                </div>
-            `).join('');
-        } else {
-            bookingsList.innerHTML = `
-                <div class="empty-state">
-                    <p>🚀 No bookings yet. Start your journey with Deshantan!</p>
-                    <a href="index.html#packages" class="btn-empty">Explore Packages</a>
-                </div>
-            `;
-        }
-    } catch (error) {
-        console.error('Error loading bookings:', error);
+    // Placeholder – implement actual backend call when ready
+    console.log('Loading bookings...');
+    const bookingsList = document.getElementById('bookingsList');
+    if (bookingsList) {
+        bookingsList.innerHTML = `
+            <div class="empty-state">
+                <p>🚀 No bookings yet. Start your journey with Deshantan!</p>
+                <a href="index.html#packages" class="btn-empty">Explore Packages</a>
+            </div>
+        `;
     }
 }
 
@@ -495,14 +477,19 @@ if (bookingForm) {
         }
 
         const formData = {
-            name: this.querySelector('input[type="text"]').value,
-            email: this.querySelector('input[type="email"]').value,
-            phone: this.querySelector('input[type="tel"]').value,
-            destination: this.querySelector('select').value,
-            travelDate: this.querySelector('input[type="date"]').value,
-            specialRequests: this.querySelector('textarea').value,
+            name: this.querySelector('input[type="text"]')?.value,
+            email: this.querySelector('input[type="email"]')?.value,
+            phone: this.querySelector('input[type="tel"]')?.value,
+            destination: this.querySelector('select')?.value,
+            travelDate: this.querySelector('input[type="date"]')?.value,
+            specialRequests: this.querySelector('textarea')?.value,
             peopleCount: 2
         };
+
+        if (!formData.name || !formData.email || !formData.destination || !formData.travelDate) {
+            showNotification('❌ Please fill in all required fields', 'error');
+            return;
+        }
 
         try {
             const token = getToken();
@@ -533,462 +520,22 @@ if (bookingForm) {
 const exploreBtn = document.getElementById('exploreBtn');
 if (exploreBtn) {
     exploreBtn.addEventListener('click', () => {
-        document.querySelector('#destinations').scrollIntoView({ behavior: 'smooth' });
+        document.querySelector('#destinations')?.scrollIntoView({ behavior: 'smooth' });
     });
 }
 
-// ========== INITIALIZE ==========
-document.addEventListener('DOMContentLoaded', () => {
-    const user = getUser();
-    if (user && getToken()) {
-        updateUIForLoggedInUser(user);
-        if (window.location.pathname.includes('dashboard.html')) {
-            loadDashboardData();
-        }
-    } else if (window.location.pathname.includes('dashboard.html')) {
-        window.location.href = 'index.html';
-    }
-
-    if (!window.location.pathname.includes('dashboard.html') && !window.location.pathname.includes('about.html')) {
-        loadDestinations();
-        loadPackages();
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closeModal(loginModal);
-            closeModal(signupModal);
-        }
-    });
-
-    // Check backend
-    checkBackendStatus();
-});
-
-async function checkBackendStatus() {
-    try {
-        const response = await fetch(`${API_URL}/health`);
-        const data = await response.json();
-        if (data.status === 'OK') {
-            console.log('✅ Backend connected successfully!');
-        }
-    } catch (error) {
-        console.warn('⚠️ Backend not running. Using fallback data.');
-    }
-}
-
-// ========== CONSOLE WELCOME ==========
-console.log('🌏 Welcome to Deshantan!');
-console.log('📚 Explore India\'s best destinations');
-console.log('💡 Tip: Sign up to unlock exclusive features!');
-console.log('🚀 Created with ❤️ using HTML, CSS, and JavaScript');
 // ========== TRIP PLANNER ==========
-
-document.addEventListener('DOMContentLoaded', function() {
-    const plannerForm = document.getElementById('plannerForm');
-    if (plannerForm) {
-        plannerForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            generateItinerary();
-        });
-    }
-});
-
 function generateItinerary() {
-    const destination = document.getElementById('destination').value;
-    const travelType = document.getElementById('travelType').value;
-    const days = document.getElementById('days').value;
-    const budget = document.getElementById('budget').value;
-    const people = document.getElementById('people').value;
-    
-    // Get selected interests
-    const interests = [];
-    document.querySelectorAll('.interest-checkbox input:checked').forEach(cb => {
-        interests.push(cb.value);
-    });
+    const destination = document.getElementById('destination')?.value;
+    const travelType = document.getElementById('travelType')?.value;
+    const days = document.getElementById('days')?.value;
+    const budget = document.getElementById('budget')?.value;
+    const people = document.getElementById('people')?.value;
 
-    // Build itinerary
-    let itinerary = [];
-    
-    const destinationNames = {
-        'taj-mahal': 'Taj Mahal, Agra',
-        'jaipur': 'Jaipur, Rajasthan',
-        'kerala': 'Kerala Backwaters',
-        'varanasi': 'Varanasi Ghats',
-        'goa': 'Goa Beaches',
-        'manali': 'Manali, Himachal Pradesh',
-        'multiple': 'Multiple Destinations'
-    };
-
-    const destName = destinationNames[destination] || 'India';
-    
-    // Day-by-day itinerary
-    for (let i = 1; i <= Math.min(days, 7); i++) {
-        let dayPlan = {
-            day: i,
-            title: `Day ${i}`,
-            activities: []
-        };
-        
-        if (i === 1) {
-            dayPlan.activities.push('Arrival and check-in at hotel');
-            dayPlan.activities.push(`Explore local area of ${destName}`);
-        } else if (i === Math.min(days, 7)) {
-            dayPlan.activities.push('Check-out from hotel');
-            dayPlan.activities.push('Departure - Last minute shopping');
-        } else {
-            // Mid days - based on interests
-            if (interests.includes('historical')) {
-                dayPlan.activities.push(`Visit historical sites in ${destName}`);
-            }
-            if (interests.includes('nature')) {
-                dayPlan.activities.push('Nature walk and photography');
-            }
-            if (interests.includes('adventure')) {
-                dayPlan.activities.push('Adventure activities');
-            }
-            if (interests.includes('food')) {
-                dayPlan.activities.push('Local food tasting tour');
-            }
-            if (interests.includes('culture')) {
-                dayPlan.activities.push('Cultural experience and local arts');
-            }
-            if (interests.includes('shopping')) {
-                dayPlan.activities.push('Shopping at local markets');
-            }
-            dayPlan.activities.push('Evening leisure and dinner');
-        }
-        
-        itinerary.push(dayPlan);
-    }
-
-    // Display results
-    displayItinerary(itinerary, destName, days, budget, people, travelType);
-}
-
-function displayItinerary(itinerary, destination, days, budget, people, travelType) {
-    const resultsDiv = document.getElementById('plannerResults');
-    const contentDiv = document.getElementById('itineraryContent');
-    
-    const travelTypeNames = {
-        'solo': 'Solo Traveler',
-        'couple': 'Couple',
-        'family': 'Family',
-        'friends': 'Friends Group',
-        'group': 'Large Group'
-    };
-    
-    const budgetNames = {
-        'budget': 'Budget (₹5,000-10,000)',
-        'standard': 'Standard (₹10,000-25,000)',
-        'premium': 'Premium (₹25,000-50,000)',
-        'luxury': 'Luxury (₹50,000+)'
-    };
-    
-    let html = `
-        <div style="margin-bottom:24px; padding:16px; background:#f0f4ff; border-radius:12px;">
-            <p><strong>📍 Destination:</strong> ${destination}</p>
-            <p><strong>👥 Travel Type:</strong> ${travelTypeNames[travelType] || travelType}</p>
-            <p><strong>📅 Duration:</strong> ${days} days</p>
-            <p><strong>💰 Budget:</strong> ${budgetNames[budget] || budget}</p>
-            <p><strong>👤 People:</strong> ${people}</p>
-        </div>
-        <h3 style="margin-bottom:16px;">📋 Your ${days}-Day Itinerary</h3>
-    `;
-    
-    itinerary.forEach(day => {
-        html += `
-            <div class="itinerary-card">
-                <h3>${day.title}</h3>
-                <ul style="list-style:none; padding:0; margin:0;">
-        `;
-        day.activities.forEach(activity => {
-            html += `<li style="padding:4px 0; color:#4a5568;">✓ ${activity}</li>`;
-        });
-        html += `
-                </ul>
-            </div>
-        `;
-    });
-    
-    html += `
-        <div style="margin-top:24px; padding:16px; background:#f0fff4; border-radius:12px; border:2px solid #48bb78;">
-            <h4 style="color:#22543d; margin-bottom:8px;">💡 Travel Tips</h4>
-            <ul style="list-style:none; padding:0; margin:0; color:#276749;">
-                <li>✓ Book hotels in advance</li>
-                <li>✓ Travel insurance recommended</li>
-                <li>✓ Check weather before packing</li>
-                <li>✓ Carry necessary medications</li>
-            </ul>
-        </div>
-        <div style="margin-top:16px; text-align:center; padding:16px; background:#ebf8ff; border-radius:12px;">
-            <p>📞 <strong>Need help customizing this itinerary?</strong> Call us at +91 98765 43210</p>
-        </div>
-    `;
-    
-    contentDiv.innerHTML = html;
-    resultsDiv.style.display = 'block';
-    document.querySelector('.planner-form').style.display = 'none';
-}
-
-function resetPlanner() {
-    document.getElementById('plannerResults').style.display = 'none';
-    document.querySelector('.planner-form').style.display = 'block';
-    document.getElementById('plannerForm').reset();
-}
-// ========== PROFILE COMPLETION ==========
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Check if user is on dashboard
-    if (window.location.pathname.includes('dashboard.html')) {
-        checkProfileCompletion();
-        loadDashboardData();
-    }
-
-    const profileForm = document.getElementById('profileCompletionForm');
-    if (profileForm) {
-        // Auto-calculate progress on input change
-        document.querySelectorAll('#profileCompletionForm input, #profileCompletionForm select').forEach(field => {
-            field.addEventListener('change', updateProfileProgress);
-            field.addEventListener('input', updateProfileProgress);
-        });
-
-        profileForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            completeProfile();
-        });
-    }
-});
-
-function checkProfileCompletion() {
-    // Check if profile is already completed
-    const profileCompleted = localStorage.getItem('deshantan_profile_completed');
-    if (profileCompleted === 'true') {
-        document.getElementById('completeProfile').style.display = 'none';
-        document.getElementById('dashboardStats').style.display = 'block';
-        document.getElementById('bookingsSection').style.display = 'block';
-    } else {
-        document.getElementById('completeProfile').style.display = 'block';
-        document.getElementById('dashboardStats').style.display = 'none';
-        document.getElementById('bookingsSection').style.display = 'none';
-    }
-}
-
-function updateProfileProgress() {
-    const form = document.getElementById('profileCompletionForm');
-    const fields = form.querySelectorAll('input, select');
-    let filled = 0;
-    let total = 0;
-
-    fields.forEach(field => {
-        // Skip buttons and hidden fields
-        if (field.type === 'submit' || field.type === 'button' || field.type === 'hidden') return;
-        if (field.type === 'radio' || field.type === 'checkbox') {
-            const group = document.querySelectorAll(`input[name="${field.name}"]`);
-            const checked = Array.from(group).some(cb => cb.checked);
-            if (checked) filled++;
-            total++;
-            return;
-        }
-        total++;
-        if (field.value && field.value.trim() !== '') {
-            filled++;
-        }
-    });
-
-    // Remove empty option from select counts
-    const selects = form.querySelectorAll('select');
-    selects.forEach(select => {
-        if (select.value === '') {
-            total--;
-        }
-    });
-
-    const percentage = Math.round((filled / Math.max(total, 1)) * 100);
-    document.getElementById('profileProgressFill').style.width = percentage + '%';
-    document.querySelector('.profile-progress').textContent = percentage + '%';
-}
-
-function completeProfile() {
-    const name = document.getElementById('profileName').value;
-    const phone = document.getElementById('profilePhone').value;
-    const role = document.querySelector('input[name="userRole"]:checked')?.value || 'tourist';
-
-    if (!name || !phone) {
-        showNotification('❌ Please fill in your name and phone number', 'error');
+    if (!destination || !travelType || !days || !budget || !people) {
+        showNotification('❌ Please fill in all fields', 'error');
         return;
     }
-
-    // Save profile data
-    const profileData = {
-        name: name,
-        dob: document.getElementById('profileDob').value,
-        gender: document.getElementById('profileGender').value,
-        nationality: document.getElementById('profileNationality').value,
-        phone: phone,
-        altEmail: document.getElementById('profileAltEmail').value,
-        address: document.getElementById('profileAddress').value,
-        travelerType: document.querySelector('input[name="travelerType"]:checked')?.value || '',
-        interests: Array.from(document.querySelectorAll('.interest-checkbox input:checked')).map(cb => cb.value),
-        role: role
-    };
-
-    // Save to localStorage
-    localStorage.setItem('deshantan_profile', JSON.stringify(profileData));
-    localStorage.setItem('deshantan_profile_completed', 'true');
-
-    showNotification('✅ Profile completed successfully!', 'success');
-
-    // Redirect based on role
-    if (role === 'business') {
-        setTimeout(() => {
-            window.location.href = 'business-register.html';
-        }, 1500);
-    } else {
-        // Show dashboard
-        document.getElementById('completeProfile').style.display = 'none';
-        document.getElementById('dashboardStats').style.display = 'block';
-        document.getElementById('bookingsSection').style.display = 'block';
-        updateUIWithProfile(profileData);
-    }
-}
-
-function skipProfile() {
-    const role = document.querySelector('input[name="userRole"]:checked')?.value || 'tourist';
-    
-    if (role === 'business') {
-        localStorage.setItem('deshantan_profile_completed', 'true');
-        showNotification('🏪 Redirecting to business registration...', 'info');
-        setTimeout(() => {
-            window.location.href = 'business-register.html';
-        }, 1500);
-    } else {
-        localStorage.setItem('deshantan_profile_completed', 'true');
-        document.getElementById('completeProfile').style.display = 'none';
-        document.getElementById('dashboardStats').style.display = 'block';
-        document.getElementById('bookingsSection').style.display = 'block';
-        showNotification('⏭️ You can complete your profile later', 'info');
-    }
-}
-
-function updateUIWithProfile(profile) {
-    // Update user name in dashboard
-    document.getElementById('dashboardName').textContent = profile.name;
-    document.getElementById('userName').textContent = profile.name;
-    
-    // You can also show the role in the UI
-    if (profile.role === 'business') {
-        document.querySelector('.dashboard-hero-content p').textContent = 
-            'Manage your business and connect with travelers';
-    } else {
-        document.querySelector('.dashboard-hero-content p').textContent = 
-            'Plan your trips and explore amazing destinations';
-    }
-}
-
-// ========== UPDATE DASHBOARD LOAD ==========
-
-async function loadDashboardData() {
-    if (!isAuthenticated()) {
-        window.location.href = 'index.html';
-        return;
-    }
-
-    try {
-        const token = getToken();
-        const response = await fetch(`${API_URL}/auth/profile`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const data = await response.json();
-
-        if (data.success) {
-            const user = data.user;
-            document.getElementById('dashboardName').textContent = user.name;
-            document.getElementById('userName').textContent = user.name;
-
-            // Load bookings
-            loadUserBookings();
-        }
-    } catch (error) {
-        console.error('Error loading dashboard:', error);
-        showNotification('❌ Error loading dashboard data', 'error');
-    }
-}
-
-// ========== LOGOUT FUNCTION ==========
-function logout() {
-    localStorage.removeItem('deshantan_token');
-    localStorage.removeItem('deshantan_user');
-    localStorage.removeItem('deshantan_profile_completed');
-    window.location.href = 'index.html';
-}
-// ========== TRIP PLANNER ==========
-
-document.addEventListener('DOMContentLoaded', function() {
-    const plannerForm = document.getElementById('plannerForm');
-    if (plannerForm) {
-        plannerForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            generateItinerary();
-        });
-    }
-
-    // Profile completion
-    const profileForm = document.getElementById('profileCompletionForm');
-    if (profileForm) {
-        document.querySelectorAll('#profileCompletionForm input, #profileCompletionForm select').forEach(field => {
-            field.addEventListener('change', updateProfileProgress);
-            field.addEventListener('input', updateProfileProgress);
-        });
-
-        profileForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            completeProfile();
-        });
-    }
-
-    // Business registration
-    const businessForm = document.getElementById('businessForm');
-    if (businessForm) {
-        businessForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            registerBusiness();
-        });
-    }
-
-    // Security registration
-    const securityForm = document.getElementById('securityForm');
-    if (securityForm) {
-        securityForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            registerSecurity();
-        });
-    }
-
-    // Others registration
-    const othersForm = document.getElementById('othersForm');
-    if (othersForm) {
-        othersForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            registerOthers();
-        });
-    }
-
-    // Check dashboard
-    if (window.location.pathname.includes('dashboard.html')) {
-        checkProfileCompletion();
-        loadDashboardData();
-    }
-});
-
-// ========== TRIP PLANNER FUNCTIONS ==========
-
-function generateItinerary() {
-    const destination = document.getElementById('destination').value;
-    const travelType = document.getElementById('travelType').value;
-    const days = document.getElementById('days').value;
-    const budget = document.getElementById('budget').value;
-    const people = document.getElementById('people').value;
 
     const interests = [];
     document.querySelectorAll('.interest-checkbox input:checked').forEach(cb => {
@@ -1035,6 +582,8 @@ function displayItinerary(itinerary, destination, days, budget, people, travelTy
     const resultsDiv = document.getElementById('plannerResults');
     const contentDiv = document.getElementById('itineraryContent');
 
+    if (!resultsDiv || !contentDiv) return;
+
     const travelTypeNames = { 'solo': 'Solo Traveler', 'couple': 'Couple', 'family': 'Family', 'friends': 'Friends Group', 'group': 'Large Group' };
     const budgetNames = { 'budget': 'Budget (₹5,000-10,000)', 'standard': 'Standard (₹10,000-25,000)', 'premium': 'Premium (₹25,000-50,000)', 'luxury': 'Luxury (₹50,000+)' };
 
@@ -1074,32 +623,39 @@ function displayItinerary(itinerary, destination, days, budget, people, travelTy
 
     contentDiv.innerHTML = html;
     resultsDiv.style.display = 'block';
-    document.querySelector('.planner-form').style.display = 'none';
+    document.querySelector('.planner-form')?.style.display = 'none';
 }
 
 function resetPlanner() {
-    document.getElementById('plannerResults').style.display = 'none';
-    document.querySelector('.planner-form').style.display = 'block';
-    document.getElementById('plannerForm').reset();
+    document.getElementById('plannerResults')?.style.display = 'none';
+    document.querySelector('.planner-form')?.style.display = 'block';
+    document.getElementById('plannerForm')?.reset();
 }
 
 // ========== PROFILE COMPLETION ==========
-
 function checkProfileCompletion() {
     const profileCompleted = localStorage.getItem('deshantan_profile_completed');
+    const completeProfile = document.getElementById('completeProfile');
+    const dashboardStats = document.getElementById('dashboardStats');
+    const bookingsSection = document.getElementById('bookingsSection');
+
+    if (!completeProfile || !dashboardStats || !bookingsSection) return;
+
     if (profileCompleted === 'true') {
-        document.getElementById('completeProfile').style.display = 'none';
-        document.getElementById('dashboardStats').style.display = 'block';
-        document.getElementById('bookingsSection').style.display = 'block';
+        completeProfile.style.display = 'none';
+        dashboardStats.style.display = 'block';
+        bookingsSection.style.display = 'block';
     } else {
-        document.getElementById('completeProfile').style.display = 'block';
-        document.getElementById('dashboardStats').style.display = 'none';
-        document.getElementById('bookingsSection').style.display = 'none';
+        completeProfile.style.display = 'block';
+        dashboardStats.style.display = 'none';
+        bookingsSection.style.display = 'none';
     }
 }
 
 function updateProfileProgress() {
     const form = document.getElementById('profileCompletionForm');
+    if (!form) return;
+
     const fields = form.querySelectorAll('input, select');
     let filled = 0;
     let total = 0;
@@ -1123,13 +679,13 @@ function updateProfileProgress() {
     });
 
     const percentage = Math.round((filled / Math.max(total, 1)) * 100);
-    document.getElementById('profileProgressFill').style.width = percentage + '%';
-    document.querySelector('.profile-progress').textContent = percentage + '%';
+    document.getElementById('profileProgressFill')?.style.width = percentage + '%';
+    document.querySelector('.profile-progress')?.textContent = percentage + '%';
 }
 
 function completeProfile() {
-    const name = document.getElementById('profileName').value;
-    const phone = document.getElementById('profilePhone').value;
+    const name = document.getElementById('profileName')?.value;
+    const phone = document.getElementById('profilePhone')?.value;
     const role = document.querySelector('input[name="userRole"]:checked')?.value || 'tourist';
 
     if (!name || !phone) {
@@ -1139,12 +695,12 @@ function completeProfile() {
 
     const profileData = {
         name: name,
-        dob: document.getElementById('profileDob').value,
-        gender: document.getElementById('profileGender').value,
-        nationality: document.getElementById('profileNationality').value,
+        dob: document.getElementById('profileDob')?.value,
+        gender: document.getElementById('profileGender')?.value,
+        nationality: document.getElementById('profileNationality')?.value,
         phone: phone,
-        altEmail: document.getElementById('profileAltEmail').value,
-        address: document.getElementById('profileAddress').value,
+        altEmail: document.getElementById('profileAltEmail')?.value,
+        address: document.getElementById('profileAddress')?.value,
         travelerType: document.querySelector('input[name="travelerType"]:checked')?.value || '',
         interests: Array.from(document.querySelectorAll('.interest-checkbox input:checked')).map(cb => cb.value),
         role: role
@@ -1156,15 +712,20 @@ function completeProfile() {
     showNotification('✅ Profile completed successfully!', 'success');
 
     if (role === 'business') {
-        setTimeout(() => { window.location.href = 'business-register.html'; }, 1500);
+        setTimeout(() => window.location.href = 'business-register.html', 1500);
     } else if (role === 'security') {
-        setTimeout(() => { window.location.href = 'security-register.html'; }, 1500);
+        setTimeout(() => window.location.href = 'security-register.html', 1500);
     } else if (role === 'others') {
-        setTimeout(() => { window.location.href = 'others-register.html'; }, 1500);
+        setTimeout(() => window.location.href = 'others-register.html', 1500);
     } else {
-        document.getElementById('completeProfile').style.display = 'none';
-        document.getElementById('dashboardStats').style.display = 'block';
-        document.getElementById('bookingsSection').style.display = 'block';
+        const completeProfile = document.getElementById('completeProfile');
+        const dashboardStats = document.getElementById('dashboardStats');
+        const bookingsSection = document.getElementById('bookingsSection');
+        if (completeProfile && dashboardStats && bookingsSection) {
+            completeProfile.style.display = 'none';
+            dashboardStats.style.display = 'block';
+            bookingsSection.style.display = 'block';
+        }
         updateUIWithProfile(profileData);
     }
 }
@@ -1173,17 +734,22 @@ function skipProfile() {
     const role = document.querySelector('input[name="userRole"]:checked')?.value || 'tourist';
     localStorage.setItem('deshantan_profile_completed', 'true');
     showNotification('⏭️ You can complete your profile later', 'info');
-    
+
     if (role === 'business') {
-        setTimeout(() => { window.location.href = 'business-register.html'; }, 1500);
+        setTimeout(() => window.location.href = 'business-register.html', 1500);
     } else if (role === 'security') {
-        setTimeout(() => { window.location.href = 'security-register.html'; }, 1500);
+        setTimeout(() => window.location.href = 'security-register.html', 1500);
     } else if (role === 'others') {
-        setTimeout(() => { window.location.href = 'others-register.html'; }, 1500);
+        setTimeout(() => window.location.href = 'others-register.html', 1500);
     } else {
-        document.getElementById('completeProfile').style.display = 'none';
-        document.getElementById('dashboardStats').style.display = 'block';
-        document.getElementById('bookingsSection').style.display = 'block';
+        const completeProfile = document.getElementById('completeProfile');
+        const dashboardStats = document.getElementById('dashboardStats');
+        const bookingsSection = document.getElementById('bookingsSection');
+        if (completeProfile && dashboardStats && bookingsSection) {
+            completeProfile.style.display = 'none';
+            dashboardStats.style.display = 'block';
+            bookingsSection.style.display = 'block';
+        }
     }
 }
 
@@ -1193,7 +759,6 @@ function updateUIWithProfile(profile) {
 }
 
 // ========== BUSINESS REGISTRATION ==========
-
 function registerBusiness() {
     const businessData = {
         businessType: document.querySelector('input[name="businessType"]:checked')?.value || '',
@@ -1217,20 +782,19 @@ function registerBusiness() {
         return;
     }
 
-    document.getElementById('businessForm').style.display = 'none';
-    document.getElementById('businessSuccess').style.display = 'block';
+    document.getElementById('businessForm')?.style.display = 'none';
+    document.getElementById('businessSuccess')?.style.display = 'block';
     localStorage.setItem('deshantan_business_profile', JSON.stringify(businessData));
     showNotification('✅ Business registered successfully!', 'success');
 }
 
 function resetBusinessForm() {
-    document.getElementById('businessForm').style.display = 'block';
-    document.getElementById('businessSuccess').style.display = 'none';
-    document.getElementById('businessForm').reset();
+    document.getElementById('businessForm')?.style.display = 'block';
+    document.getElementById('businessSuccess')?.style.display = 'none';
+    document.getElementById('businessForm')?.reset();
 }
 
 // ========== SECURITY REGISTRATION ==========
-
 function registerSecurity() {
     const securityData = {
         name: document.getElementById('secName')?.value || '',
@@ -1253,14 +817,13 @@ function registerSecurity() {
         return;
     }
 
-    document.getElementById('securityForm').style.display = 'none';
-    document.getElementById('securitySuccess').style.display = 'block';
+    document.getElementById('securityForm')?.style.display = 'none';
+    document.getElementById('securitySuccess')?.style.display = 'block';
     localStorage.setItem('deshantan_security_profile', JSON.stringify(securityData));
     showNotification('✅ Security profile submitted!', 'success');
 }
 
 // ========== OTHERS REGISTRATION ==========
-
 function registerOthers() {
     const othersData = {
         name: document.getElementById('otherName')?.value || '',
@@ -1285,51 +848,107 @@ function registerOthers() {
         return;
     }
 
-    document.getElementById('othersForm').style.display = 'none';
-    document.getElementById('othersSuccess').style.display = 'block';
+    document.getElementById('othersForm')?.style.display = 'none';
+    document.getElementById('othersSuccess')?.style.display = 'block';
     localStorage.setItem('deshantan_others_profile', JSON.stringify(othersData));
     showNotification('✅ Support profile submitted!', 'success');
 }
 
-// ========== DASHBOARD FUNCTIONS ==========
-
-async function loadDashboardData() {
-    if (!isAuthenticated()) {
-        window.location.href = 'index.html';
-        return;
+// ========== INITIALIZATION ==========
+document.addEventListener('DOMContentLoaded', () => {
+    // Attach event listeners for forms (if present)
+    const plannerForm = document.getElementById('plannerForm');
+    if (plannerForm) {
+        plannerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            generateItinerary();
+        });
     }
 
-    try {
-        const token = getToken();
-        const response = await fetch(`${API_URL}/auth/profile`, {
-            headers: { 'Authorization': `Bearer ${token}` }
+    const profileForm = document.getElementById('profileCompletionForm');
+    if (profileForm) {
+        document.querySelectorAll('#profileCompletionForm input, #profileCompletionForm select').forEach(field => {
+            field.addEventListener('change', updateProfileProgress);
+            field.addEventListener('input', updateProfileProgress);
         });
-        const data = await response.json();
+        profileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            completeProfile();
+        });
+    }
 
-        if (data.success) {
-            const user = data.user;
-            document.getElementById('dashboardName').textContent = user.name;
-            document.getElementById('userName').textContent = user.name;
-            loadUserBookings();
+    const businessForm = document.getElementById('businessForm');
+    if (businessForm) {
+        businessForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            registerBusiness();
+        });
+    }
+
+    const securityForm = document.getElementById('securityForm');
+    if (securityForm) {
+        securityForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            registerSecurity();
+        });
+    }
+
+    const othersForm = document.getElementById('othersForm');
+    if (othersForm) {
+        othersForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            registerOthers();
+        });
+    }
+
+    // Check authentication state
+    const user = getUser();
+    if (user && getToken()) {
+        updateUIForLoggedInUser(user);
+    }
+
+    // Dashboard specific initialization
+    if (window.location.pathname.includes('dashboard.html')) {
+        if (!isAuthenticated()) {
+            window.location.href = 'index.html';
+            return;
+        }
+        checkProfileCompletion();
+        loadDashboardData();
+    }
+
+    // Load destinations and packages on relevant pages
+    if (!window.location.pathname.includes('dashboard.html') && !window.location.pathname.includes('about.html')) {
+        loadDestinations();
+        loadPackages();
+    }
+
+    // Escape key closes modals
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeModal(loginModal);
+            closeModal(signupModal);
+        }
+    });
+
+    // Check backend status
+    checkBackendStatus();
+});
+
+async function checkBackendStatus() {
+    try {
+        const response = await fetch(`${API_URL}/health`);
+        const data = await response.json();
+        if (data.status === 'OK') {
+            console.log('✅ Backend connected successfully!');
         }
     } catch (error) {
-        console.error('Error loading dashboard:', error);
-        showNotification('❌ Error loading dashboard data', 'error');
+        console.warn('⚠️ Backend not running. Using fallback data.');
     }
 }
 
-async function loadUserBookings() {
-    // This is a placeholder - you can implement this later
-    console.log('Loading bookings...');
-}
-
-function logout() {
-    localStorage.removeItem('deshantan_token');
-    localStorage.removeItem('deshantan_user');
-    localStorage.removeItem('deshantan_profile_completed');
-    window.location.href = 'index.html';
-}
-
-// ========== AUTH FUNCTIONS (Keep your existing ones) ==========
-
-// Make sure your existing auth functions (handleLogin, handleSignup, etc.) are still here
+// ========== CONSOLE WELCOME ==========
+console.log('🌏 Welcome to Deshantan!');
+console.log('📚 Explore India\'s best destinations');
+console.log('💡 Tip: Sign up to unlock exclusive features!');
+console.log('🚀 Created with ❤️ using HTML, CSS, and JavaScript');
