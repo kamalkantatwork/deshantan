@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trip Planner - Deshantan</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🌏</span>
+                <span class="logo-text">Deshantan</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#destinations">Destinations</a></li>
+                <li><a href="index.html#packages">Packages</a></li>
+                <li><a href="trip-planner.html" class="active">Plan Trip</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-actions" id="navActions">
+                <button class="btn-login" id="openLogin">Sign In</button>
+                <button class="btn-signup" id="openSignup">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Planner Hero -->
+    <section class="planner-hero">
+        <div class="planner-hero-content">
+            <h1>✈️ Plan Your Dream Trip</h1>
+            <p>Tell us what you're looking for, and we'll create the perfect itinerary for you</p>
+        </div>
+    </section>
+
+    <!-- Planner Form -->
+    <section class="planner-section">
+        <div class="planner-container">
+            <form id="plannerForm" class="planner-form">
+                <!-- Step 1: Basic Info -->
+                <div class="form-step">
+                    <h2>📍 Where to?</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Destination</label>
+                            <select id="destination" required>
+                                <option value="">Select a destination</option>
+                                <option value="taj-mahal">Taj Mahal, Agra</option>
+                                <option value="jaipur">Jaipur, Rajasthan</option>
+                                <option value="kerala">Kerala Backwaters</option>
+                                <option value="varanasi">Varanasi Ghats</option>
+                                <option value="goa">Goa Beaches</option>
+                                <option value="manali">Manali, Himachal</option>
+                                <option value="multiple">Multiple Destinations</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Travel Type</label>
+                            <select id="travelType" required>
+                                <option value="">Select type</option>
+                                <option value="solo">Solo Travel</option>
+                                <option value="couple">Couple</option>
+                                <option value="family">Family</option>
+                                <option value="friends">Friends</option>
+                                <option value="group">Group (10+)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Dates -->
+                <div class="form-step">
+                    <h2>📅 When?</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Start Date</label>
+                            <input type="date" id="startDate" required />
+                        </div>
+                        <div class="form-group">
+                            <label>End Date</label>
+                            <input type="date" id="endDate" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Number of Days</label>
+                            <input type="number" id="days" placeholder="e.g., 5" min="1" max="30" required />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Budget -->
+                <div class="form-step">
+                    <h2>💰 Budget</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Budget per person</label>
+                            <select id="budget" required>
+                                <option value="">Select budget</option>
+                                <option value="budget">Budget (₹5,000-10,000)</option>
+                                <option value="standard">Standard (₹10,000-25,000)</option>
+                                <option value="premium">Premium (₹25,000-50,000)</option>
+                                <option value="luxury">Luxury (₹50,000+)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Number of People</label>
+                            <input type="number" id="people" placeholder="e.g., 2" min="1" max="50" required />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Interests -->
+                <div class="form-step">
+                    <h2>🎯 What interests you?</h2>
+                    <div class="interests-grid">
+                        <label class="interest-checkbox">
+                            <input type="checkbox" value="historical" /> 🏛️ Historical
+                        </label>
+                        <label class="interest-checkbox">
+                            <input type="checkbox" value="nature" /> 🌿 Nature & Wildlife
+                        </label>
+                        <label class="interest-checkbox">
+                            <input type="checkbox" value="spiritual" /> 🕉️ Spiritual
+                        </label>
+                        <label class="interest-checkbox">
+                            <input type="checkbox" value="adventure" /> 🏔️ Adventure
+                        </label>
+                        <label class="interest-checkbox">
+                            <input type="checkbox" value="beach" /> 🏖️ Beaches
+                        </label>
+                        <label class="interest-checkbox">
+                            <input type="checkbox" value="culture" /> 🎭 Culture & Arts
+                        </label>
+                        <label class="interest-checkbox">
+                            <input type="checkbox" value="food" /> 🍛 Food & Cuisine
+                        </label>
+                        <label class="interest-checkbox">
+                            <input type="checkbox" value="shopping" /> 🛍️ Shopping
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Step 5: Preferences -->
+                <div class="form-step">
+                    <h2>⭐ Preferences</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Accommodation</label>
+                            <select id="accommodation">
+                                <option value="any">Any</option>
+                                <option value="hostel">Hostel/Dorm</option>
+                                <option value="hotel">Budget Hotel</option>
+                                <option value="resort">Resort</option>
+                                <option value="luxury">Luxury Hotel</option>
+                                <option value="homestay">Homestay</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Transport</label>
+                            <select id="transport">
+                                <option value="any">Any</option>
+                                <option value="train">Train</option>
+                                <option value="bus">Bus</option>
+                                <option value="cab">Private Cab</option>
+                                <option value="flight">Flight</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Special Requirements</label>
+                        <textarea id="specialRequirements" rows="3" placeholder="Any special requirements, dietary needs, accessibility, etc."></textarea>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-planner">🎯 Plan My Trip</button>
+                </div>
+            </form>
+
+            <!-- Results Section -->
+            <div id="plannerResults" class="planner-results" style="display: none;">
+                <h2>🗺️ Your Personalized Itinerary</h2>
+                <div id="itineraryContent"></div>
+                <button class="btn-planner" onclick="resetPlanner()">🔄 Plan Another Trip</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>🌏 Deshantan</h3>
+                <p>Your trusted travel partner for exploring the incredible India.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="index.html#destinations">Destinations</a>
+                <a href="index.html#packages">Packages</a>
+                <a href="trip-planner.html">Plan Trip</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>📧 info@deshantan.com</p>
+                <p>📞 +91 98765 43210</p>
+                <p>🕐 Mon-Sat: 9AM - 8PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Deshantan Tourism. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
