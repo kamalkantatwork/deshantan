@@ -1,5 +1,5 @@
 // ========== API CONFIGURATION ==========
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://deshantan-api.onrender.com/api';
 
 // ========== AUTH MANAGEMENT ==========
 function getToken() {
