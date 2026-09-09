@@ -2785,6 +2785,328 @@ body {
     100% { background-position: -200% 0; }
 }
 
+/* ========== TRUST & SAFETY HUB ========== */
+.trust-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.trust-card {
+    display: block;
+    background: white;
+    border-radius: 18px;
+    padding: 30px;
+    text-decoration: none;
+    color: var(--text-dark);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.trust-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary);
+}
+
+.trust-icon {
+    font-size: 40px;
+    margin-bottom: 14px;
+}
+
+.trust-card h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.trust-card p {
+    color: var(--text-light);
+    font-size: 14px;
+    margin-bottom: 14px;
+    line-height: 1.5;
+}
+
+.trust-link {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 14px;
+}
+
+/* Filter bars used on guides/eateries/alerts/stays pages */
+.trust-filter-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px 0;
+}
+
+.trust-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px;
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+}
+
+.trust-filter-bar .form-group {
+    flex: 1;
+    min-width: 160px;
+    margin-bottom: 0;
+}
+
+/* Off-beat destination tabs (index.html) */
+.dest-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.dest-tab {
+    padding: 10px 22px;
+    border-radius: 50px;
+    border: 2px solid #e2e8f0;
+    background: white;
+    color: var(--text-light);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.dest-tab.active,
+.dest-tab:hover {
+    border-color: var(--primary);
+    background: var(--gradient);
+    color: white;
+}
+
+.offbeat-tag {
+    display: inline-block;
+    background: #e6fffa;
+    color: #234e52;
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+/* Shared badges/tags for guide, eatery & stay cards */
+.badge-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.verified-badge {
+    display: inline-block;
+    background: #c6f6d5;
+    color: #22543d;
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.commission-badge {
+    display: inline-block;
+    background: #fed7d7;
+    color: #822727;
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px !important;
+}
+
+.mini-tag {
+    background: #edf2f7;
+    color: var(--text-light);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 50px;
+}
+
+.owner-contact {
+    background: #edf2f7;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+/* Hygiene rating badges */
+.hygiene-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.hygiene-good { background: #c6f6d5; color: #22543d; }
+.hygiene-ok { background: #feebc8; color: #7b341e; }
+.hygiene-poor { background: #fed7d7; color: #822727; }
+
+/* Scam / price alert feed */
+.alert-card {
+    background: white;
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    border-left: 5px solid #cbd5e0;
+}
+
+.alert-card.severity-high { border-left-color: #e53e3e; }
+.alert-card.severity-medium { border-left-color: #f6ad55; }
+.alert-card.severity-low { border-left-color: #68d391; }
+
+.alert-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.alert-category-pill {
+    background: #edf2f7;
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.alert-city-pill {
+    color: var(--text-light);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.alert-card h3 {
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.alert-card p {
+    color: var(--text-light);
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.fair-price-note {
+    background: #fffaf0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: #7b341e !important;
+    font-weight: 600;
+}
+
+.alert-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.alert-card-footer span {
+    font-size: 12px;
+    color: #a0aec0;
+}
+
+.btn-upvote {
+    background: #edf2f7;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-upvote:hover {
+    background: var(--gradient);
+    color: white;
+}
+
+/* Safety check-in page */
+.checkin-meta {
+    text-align: left;
+    background: #f7fafc;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 20px 0;
+}
+
+.checkin-meta p {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.checkin-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn-sos {
+    background: #e53e3e;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 8px 20px rgba(229,62,62,0.35);
+}
+
+.btn-sos:hover {
+    background: #c53030;
+    transform: translateY(-2px);
+}
+
+.btn-planner-secondary {
+    background: transparent;
+    border: 2px solid #e2e8f0;
+    color: var(--text-light);
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-planner-secondary:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
     .step-indicator {
@@ -2807,5 +3129,15 @@ body {
     .transport-card {
         flex-direction: column;
         text-align: center;
+    }
+    .trust-filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .checkin-actions {
+        flex-direction: column;
+    }
+    .btn-sos, .checkin-actions .btn-security {
+        width: 100%;
     }
 }
